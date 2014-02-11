@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df0152d9-2848-4296-9eb5-a01d363d0c73" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/PlayerController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/PlayerView.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/player.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="df0152d9-2848-4296-9eb5-a01d363d0c73" name="Default" comment="" />
     <ignored path="scrabble.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1391974811190" ignored="false" />
-    <file path="$PROJECT_DIR$/../../csf/Lesson09_Ngrams/.idea/workspace.xml" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1391991366207" ignored="false" />
+    <file path="$PROJECT_DIR$/../../csf/Lesson09_Ngrams/.idea/workspace.xml" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1392084835731" ignored="false" />
     <file path="/player.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1391983815625" ignored="false" />
     <file path="/playerView.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1391989199404" ignored="false" />
     <file path="/playerModel.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1391990092954" ignored="false" />
     <file path="/application.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1391991304264" ignored="false" />
     <file path="/playerController.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1391989191178" ignored="false" />
     <file path="/Application.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1391990157906" ignored="false" />
-    <file path="/fragment.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1391989696968" ignored="false" />
+    <file path="/fragment.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1392084402603" ignored="false" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1392084835731" ignored="false" />
+    <file path="$PROJECT_DIR$/../../csf/Lesson14/src/SEFLesson14.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1392079427604" ignored="false" />
+    <file path="$PROJECT_DIR$/../../csf/Lesson14/src/AsyncDirectoryCopier.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1392085488495" ignored="false" />
+    <file path="/AsyncDirectoryCopier.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1392085481051" ignored="false" />
+    <file path="$PROJECT_DIR$/../../csf/Lesson14/src/DirectoryCopyRunner.java" changelist="df0152d9-2848-4296-9eb5-a01d363d0c73" time="1392084339026" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,10 +78,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PlayerModel.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PlayerModel.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/PlayerModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="0" selection-start="519" selection-end="519" vertical-scroll-proportion="0.0">
+            <state line="31" column="0" selection-start="519" selection-end="519" vertical-scroll-proportion="1.0839161">
               <folding />
             </state>
           </provider>
@@ -105,10 +105,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Application.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Application.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Application.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="49" selection-start="730" selection-end="730" vertical-scroll-proportion="0.7692308">
+            <state line="22" column="49" selection-start="730" selection-end="730" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -471,6 +471,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="49" selection-start="730" selection-end="730" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/PlayerView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="14" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0">
@@ -480,14 +487,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PlayerModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="0" selection-start="519" selection-end="519" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="49" selection-start="730" selection-end="730" vertical-scroll-proportion="0.7692308">
+        <state line="31" column="0" selection-start="519" selection-end="519" vertical-scroll-proportion="1.0839161">
           <folding />
         </state>
       </provider>
