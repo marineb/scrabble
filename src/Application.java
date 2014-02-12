@@ -14,25 +14,25 @@ public class Application {
 
 
         // probably need a for loop to create the players
-        for (int i=0 ; i<2 ; i++) {
-
-            System.out.println("Enter the name of player "+ (i+1) +" : ");
-            String playerName = scanner.next();
-            System.out.println(playerName);
-
-            // we need to create an array where we store the player.
-            // we need to call the player class.
-
-        }
+//        for (int i=0 ; i<2 ; i++) {
+//
+//            System.out.println("Enter the name of player "+ (i+1) +" : ");
+//            String playerName = scanner.next();
+//            System.out.println(playerName);
+//
+//            // we need to create an array where we store the player.
+//            // we need to call the player class.
+//
+//        }
 
         //test methods for GameBoard class
         System.out.println("begin board initialization");
-        GameBoard game = new GameBoard(2);
+        GameBoard game = new GameBoard();
         System.out.println("board initialization complete");
 
-        game.validateWord("hello");
-        game.validateWord("pilot");
-        game.validateWord("juishshsndknaksjhdbahsd");
+        System.out.println(game.validateWord("hello"));
+        System.out.println(game.validateWord("pilot"));
+        System.out.println(game.validateWord("juishshsndknaksjhdbahsd"));
 
     }
 

@@ -22,12 +22,14 @@ public class GameBoard {
     HashMap tileBag;
     HashSet dict;
 
-    public GameBoard(int numberOfPlayers) {
+    public GameBoard() {
         this.scrabbleBoard = new char[15][15];
         this.tileBag = new HashMap<Character, Integer>();
         this.dict = new HashSet<String>();
 
         this.initTileBag();
+        System.out.println("tile bag init done\n");
+
         try {   this.initDict();    }
         catch (FileNotFoundException e) {
             System.err.println("FileNotFoundException: " + e);
@@ -39,7 +41,6 @@ public class GameBoard {
      */
     private void initBoard() {
         //new char array is already initialized
-
 
     }
 
@@ -82,14 +83,18 @@ public class GameBoard {
      * Initializes the dictionary
      */
     private void initDict() throws FileNotFoundException {
-        BufferedReader dictReader = new BufferedReader(new FileReader("web2"));
+        System.out.println("entered initDict()");
+        BufferedReader dictReader = new BufferedReader(new FileReader("web2.txt"));
         try {
             String line = dictReader.readLine();
+            System.out.println("first line: " + line);
 
             //add all words from web2 to hashSet
             while (line != null) {
                 dict.add(line);
+                line = dictReader.readLine();
             }
+            System.out.println("done reading entire file");
         } catch (IOException e) {
             System.err.println("IOException: " + e);
             e.printStackTrace();
@@ -97,6 +102,10 @@ public class GameBoard {
 
     }
 
+    /**
+     * @param word  input to be validated
+     * @return      boolean if word is valid
+     */
     public boolean validateWord(String word) {
         return this.dict.contains(word);
     }
