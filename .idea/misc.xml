@@ -10,7 +10,11 @@
     <states>
       <state key="ProjectJDKs.UI">
         <settings>
+<<<<<<< HEAD
           <last-edited>1.6</last-edited>
+=======
+          <last-edited>Android API 19 Platform</last-edited>
+>>>>>>> msc_branch_1
           <splitter-proportions>
             <option name="proportions">
               <list>
