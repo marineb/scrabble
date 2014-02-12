@@ -10,12 +10,12 @@ import java.util.HashMap;
  * Game class for scrabble, handles the game logic
  * //TODO: convert this to a Singleton since only one object will ever be required
  */
-public class Game {
+public class GameBoard {
     char[][] scrabbleBoard;
     int numberOfPlayers;
     HashMap tileBag;
 
-    public Game(int numberOfPlayers) {
+    public GameBoard(int numberOfPlayers) {
         this.scrabbleBoard = new char[15][15];
         this.tileBag = new HashMap<Character, Integer>();
     }
