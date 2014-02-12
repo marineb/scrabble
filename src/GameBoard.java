@@ -4,26 +4,42 @@
  * Project: Scrabble
  */
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Game class for scrabble, handles the game logic
  * //TODO: convert this to a Singleton since only one object will ever be required
+ * //TODO: change HashSet implementation of dictionary
  */
 public class GameBoard {
     char[][] scrabbleBoard;
     int numberOfPlayers;
     HashMap tileBag;
+    HashSet dict;
 
     public GameBoard(int numberOfPlayers) {
         this.scrabbleBoard = new char[15][15];
         this.tileBag = new HashMap<Character, Integer>();
+        this.dict = new HashSet<String>();
+
+        this.initTileBag();
+        try {   this.initDict();    }
+        catch (FileNotFoundException e) {
+            System.err.println("FileNotFoundException: " + e);
+        }
     }
 
     /**
      * Initializes the scrabble board
      */
     private void initBoard() {
+        //new char array is already initialized
+
 
     }
 
@@ -60,6 +76,29 @@ public class GameBoard {
             this.tileBag.put('Y', 2);
             this.tileBag.put('Z', 1);
         }
+    }
+
+    /**
+     * Initializes the dictionary
+     */
+    private void initDict() throws FileNotFoundException {
+        BufferedReader dictReader = new BufferedReader(new FileReader("web2"));
+        try {
+            String line = dictReader.readLine();
+
+            //add all words from web2 to hashSet
+            while (line != null) {
+                dict.add(line);
+            }
+        } catch (IOException e) {
+            System.err.println("IOException: " + e);
+            e.printStackTrace();
+        }
+
+    }
+
+    public boolean validateWord(String word) {
+        return this.dict.contains(word);
     }
 
 

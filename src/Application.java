@@ -25,7 +25,14 @@ public class Application {
 
         }
 
+        //test methods for GameBoard class
+        System.out.println("begin board initialization");
+        GameBoard game = new GameBoard(2);
+        System.out.println("board initialization complete");
 
+        game.validateWord("hello");
+        game.validateWord("pilot");
+        game.validateWord("juishshsndknaksjhdbahsd");
 
     }
 
