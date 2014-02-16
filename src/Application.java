@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 
 public class Application {
@@ -27,12 +26,14 @@ public class Application {
 
         //test methods for GameBoard class
         System.out.println("begin board initialization");
-        GameBoard game = new GameBoard();
+        Board game = new Board();
         System.out.println("board initialization complete");
 
         System.out.println(game.validateWord("hello"));
         System.out.println(game.validateWord("pilot"));
         System.out.println(game.validateWord("juishshsndknaksjhdbahsd"));
+
+        //System.out.println("hello score: " + game.calculateWordScore("hello"));
 
     }
 
