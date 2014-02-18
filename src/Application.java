@@ -31,10 +31,8 @@ public class Application {
         Board game = new Board();
         System.out.println("board initialization complete");
 
-        System.out.println(game.validateWord("hello"));
-        System.out.println(game.validateWord("pilot"));
-        System.out.println(game.validateWord("juishshsndknaksjhdbahsd"));
-
+        //System.out.println(game.validateWord("valid"));
+        //System.out.println(game.validateWord("thisWordDoesNotExist"));
         //System.out.println("hello score: " + game.calculateWordScore("hello"));
 
         // TODO: Here we should visualize the board to the user.
@@ -43,10 +41,22 @@ public class Application {
         // TODO: We create user 1 their set of letters and show it to them
         // Code here.
 
-        // We should build some logic so it loops through the turn.
+        // Build logic so it loops through the different players' turns.
         System.out.println(one.getName()+", type a word to start with.");
-        System.out.println("To enter your word, type, the ");
+        String theWord = scanner.next();
+        // check if the word is valid itself
+        if (game.validateWord(theWord.toLowerCase()) == true ) {
+            System.out.println(theWord +" is valid!");
+        }
 
+
+        // TODO: check if the word is being placed in valid location and is still valid with letters around it
+        // TODO: place word on board
+        // TODO: remove letters from player 1
+        // TODO: calculate score for player 1
+        // TODO: add score to score table
+        // TODO: fill up letters' tray for player 1
+        // TODO: player 2 plays -- this will go into a loop after
 
     }
 
