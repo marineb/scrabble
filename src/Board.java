@@ -37,6 +37,7 @@ public class Board {
      */
     //@SuppressWarnings("unchecked")        //not sure if suppressing warnings is good practice
     private void initTileBag() {
+        this.tileBag =  new HashMap<Character, Integer>();
         if (this.tileBag.isEmpty()) {
             this.tileBag.put('A', 9);
             this.tileBag.put('B', 2);
@@ -72,6 +73,7 @@ public class Board {
      * //TODO: Find a way to read these directly from the file
      */
     public void initTileScore() {
+        this.tileScore = new HashMap<Character, Integer>();
         if (this.tileScore.isEmpty()) {
             this.tileScore.put('A', 1);
             this.tileScore.put('B', 3);

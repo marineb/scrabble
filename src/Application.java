@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Application {
@@ -7,22 +8,24 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println(" ");
-        System.out.println("Hello. Let's play some Scrabble!!");
+        System.out.println("Let's play some Scrabble!!");
         System.out.println("---------------------------------");
         System.out.println(" ");
 
 
-        // probably need a for loop to create the players
-//        for (int i=0 ; i<2 ; i++) {
-//
-//            System.out.println("Enter the name of player "+ (i+1) +" : ");
-//            String playerName = scanner.next();
-//            System.out.println(playerName);
-//
-//            // we need to create an array where we store the player.
-//            // we need to call the player class.
-//
-//        }
+        // Create the players
+        String[] playerNames = new String[2];
+        for (int i = 0 ; i < 2 ; i++) {
+            System.out.println("Enter the name of player "+ (i+1) +" : ");
+            playerNames[i] = scanner.next();
+        }
+
+        Player one = new Player();
+        Player two = new Player();
+        one.setName(playerNames[0]);
+        two.setName(playerNames[1]);
+
+        System.out.println(one.getName());
 
         //test methods for GameBoard class
         System.out.println("begin board initialization");
