@@ -2,6 +2,7 @@ public class Player  {
 
     private String name;
     private int id;
+    private String[] letters;
     private int currentScore;
 
 
@@ -27,6 +28,14 @@ public class Player  {
 
     public void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
+    }
+
+    public String[] getLetters() {
+        return letters;
+    }
+
+    public void setLetters(String[] letters) {
+        this.letters = letters;
     }
 
 }

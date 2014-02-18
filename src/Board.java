@@ -130,7 +130,7 @@ public class Board {
      * @return      boolean if word is valid
      */
     public boolean validateWord(String word) {
-        return this.dict.contains(word);
+        return this.dict.contains(word.toLowerCase());
     }
 
     /**

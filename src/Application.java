@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class Application {
 
@@ -13,7 +12,7 @@ public class Application {
         System.out.println(" ");
 
 
-        // Create the players
+        // Players are created
         String[] playerNames = new String[2];
         for (int i = 0 ; i < playerNames.length ; i++) {
             System.out.println("Enter the name of player "+ (i+1) +" : ");
@@ -25,30 +24,29 @@ public class Application {
         one.setName(playerNames[0]);
         two.setName(playerNames[1]);
 
-
-        //test methods for GameBoard class
-        System.out.println("begin board initialization");
+        // Game is initialized
         Board game = new Board();
-        System.out.println("board initialization complete");
+        //System.out.println("board initialization complete");
 
-        //System.out.println(game.validateWord("valid"));
-        //System.out.println(game.validateWord("thisWordDoesNotExist"));
         //System.out.println("hello score: " + game.calculateWordScore("hello"));
 
         // TODO: Here we should visualize the board to the user.
         // Code here.
 
         // TODO: We create user 1 their set of letters and show it to them
-        // Code here.
+        // get random set of 7 letters from all available tiles
+        String[] letterBunch = new String[7];
+        // TODO: get 7 random letters from tilebag
+        Random random = new Random();
+        one.setLetters(letterBunch);
 
-        // Build logic so it loops through the different players' turns.
-        System.out.println(one.getName()+", type a word to start with.");
+        // Loops through the different players' turns (not happening yet!! :) )
+        System.out.println(one.getName() + ", type a word to start with.");
         String theWord = scanner.next();
         // check if the word is valid itself
-        if (game.validateWord(theWord.toLowerCase()) == true ) {
+        if (game.validateWord(theWord) == true ) {
             System.out.println(theWord +" is valid!");
         }
-
 
         // TODO: check if the word is being placed in valid location and is still valid with letters around it
         // TODO: place word on board
