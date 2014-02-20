@@ -37,6 +37,7 @@ public class Board {
      */
     //@SuppressWarnings("unchecked")        //not sure if suppressing warnings is good practice
     private void initTileBag() {
+        this.tileBag =  new HashMap<Character, Integer>();
         if (this.tileBag.isEmpty()) {
             this.tileBag.put('A', 9);
             this.tileBag.put('B', 2);
@@ -71,7 +72,8 @@ public class Board {
      * Initializes tile scores in another hashmap
      * //TODO: Find a way to read these directly from the file
      */
-    public void initTileScore() {
+    private void initTileScore() {
+        this.tileScore = new HashMap<Character, Integer>();
         if (this.tileScore.isEmpty()) {
             this.tileScore.put('A', 1);
             this.tileScore.put('B', 3);
@@ -147,7 +149,7 @@ public class Board {
      * @param C     Tile to be removed
      * @return      removed successfully
      */
-    public boolean removeTileFromBag(Character C) {
+    public boolean removeTileFromBag(char C) {
         if (this.tileBag.containsKey(C)) {
             int newValue = this.tileBag.get(C) - 1;
             this.tileBag.put(C, newValue);
@@ -161,7 +163,7 @@ public class Board {
      * @param C     Tile added back to bag
      * @return      added successfully
      */
-    public boolean addTileToBag(Character C) {
+    public boolean addTileToBag(char C) {
         if (this.tileBag.containsKey(C)) {
             int newValue = this.tileBag.get(C) + 1;
             this.tileBag.put(C, newValue);
@@ -169,6 +171,9 @@ public class Board {
         }
         return false;
     }
+
+
+
 
 
 
