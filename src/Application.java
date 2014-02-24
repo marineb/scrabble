@@ -36,8 +36,27 @@ public class Application {
         // TODO: We create user 1 their set of letters and show it to them
         // get random set of 7 letters from all available tiles
         String[] letterBunch = new String[7];
+        letterBunch[0] = "a";
+        letterBunch[1] = "c";
+        letterBunch[2] = "w";
+        letterBunch[3] = "i";
+        letterBunch[4] = "p";
+        letterBunch[5] = "q";
+        letterBunch[6] = "m";
+        System.out.println(one.getName()+", your tiles are ["+letterBunch[0]+"_"+ letterBunch[1] +"_"+letterBunch[2]+"_"+letterBunch[3]+"_"+letterBunch[4]+"_"+letterBunch[5]+"_"+letterBunch[6]+"]");
+
         // TODO: get 7 random letters from tilebag
+        // Tile stuff should be in board
+        // look at number of letter a user has, refill their tile tray
+        // get how many letter user's tray has
         Random random = new Random();
+        System.out.println(game.tileBag);
+        // don't forget to remove letters from tileBag
+
+        //Random generator = new Random();
+        //Object[] values = myHashMap.values().toArray();
+        //Object randomValue = values[generator.nextInt(values.length)];
+
         one.setLetters(letterBunch);
 
         // Loops through the different players' turns (not happening yet!! :) )
