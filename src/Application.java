@@ -79,7 +79,7 @@ public class Application {
         System.out.println(one.getLetters());
 
         // Loops through the different players' turns (not happening yet!! :) )
-        System.out.println(one.getName() + ", type a word to start with.");
+        System.out.println(one.getName() + ", type a word to start with .");
         String theWord = scanner.next();
         // check if the word is valid itself
         if (game.validateWord(theWord) == true ) {
