@@ -149,7 +149,7 @@ public class Board {
      * @param C     Tile to be removed
      * @return      removed successfully
      */
-    public boolean removeTileFromBag(Character C) {
+    public boolean removeTileFromBag(char C) {
         if (this.tileBag.containsKey(C)) {
             int newValue = this.tileBag.get(C) - 1;
             this.tileBag.put(C, newValue);
@@ -163,7 +163,7 @@ public class Board {
      * @param C     Tile added back to bag
      * @return      added successfully
      */
-    public boolean addTileToBag(Character C) {
+    public boolean addTileToBag(char C) {
         if (this.tileBag.containsKey(C)) {
             int newValue = this.tileBag.get(C) + 1;
             this.tileBag.put(C, newValue);
@@ -171,6 +171,9 @@ public class Board {
         }
         return false;
     }
+
+
+
 
 
 
