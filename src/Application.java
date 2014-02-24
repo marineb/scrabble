@@ -50,12 +50,21 @@ public class Application {
         // look at number of letter a user has, refill their tile tray
         // get how many letter user's tray has
         Random random = new Random();
-        System.out.println(game.tileBag);
-        // don't forget to remove letters from tileBag
+        Object[] letters = game.tileBag.keySet().toArray();
+        Object randomLetter = letters[random.nextInt(letters.length)];
 
-        //Random generator = new Random();
-        //Object[] values = myHashMap.values().toArray();
-        //Object randomValue = values[generator.nextInt(values.length)];
+        if (game.tileBag.get(randomLetter) == 0) {
+            // pick a diff letter
+        }
+
+        else {
+            Object numberOfThatLetter = game.tileBag.get(randomLetter);
+            int newValue = game.tileBag.get(randomLetter) -1;
+            game.tileBag.put((Character) randomLetter, newValue);
+
+            System.out.println(randomLetter);
+        }
+
 
         one.setLetters(letterBunch);
 
