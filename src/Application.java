@@ -34,7 +34,10 @@ public class Application {
         // Code here.
 
         // TODO: We create user 1 their set of letters and show it to them
-        // get random set of 7 letters from all available tiles
+
+
+
+
         String[] lettersTray = new String[7];
         lettersTray[0] = "A";
         lettersTray[1] = "C";
@@ -43,11 +46,7 @@ public class Application {
         //lettersTray[4] = "p";
         lettersTray[5] = "Q";
         lettersTray[6] = "M";
-        System.out.println(one.getName()+", your tiles are ["+lettersTray[0]+"_"+ lettersTray[1] +"_"+lettersTray[2]+"_"+lettersTray[3]+"_"+lettersTray[4]+"_"+lettersTray[5]+"_"+lettersTray[6]+"]");
-
-
-        // See how many letters a user is missing, refill their tile tray
-        // TODO: here this is not even happening for a user.
+        //System.out.println(one.getName()+", your tiles are ["+lettersTray[0]+"_"+ lettersTray[1] +"_"+lettersTray[2]+"_"+lettersTray[3]+"_"+lettersTray[4]+"_"+lettersTray[5]+"_"+lettersTray[6]+"]");
 
         int lettersMissing = 0;
         for (int i=0 ; i < lettersTray.length ; i++ ) {
@@ -79,7 +78,7 @@ public class Application {
         System.out.println(one.getLetters());
 
         // Loops through the different players' turns (not happening yet!! :) )
-        System.out.println(one.getName() + ", type a word to start with .");
+        System.out.println(one.getName() + ", type a word to start with.");
         String theWord = scanner.next();
         // check if the word is valid itself
         if (game.validateWord(theWord) == true ) {
