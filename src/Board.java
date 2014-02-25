@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 
 
 /**
@@ -169,6 +170,35 @@ public class Board {
             return true;
         }
         return false;
+    }
+
+
+
+    /**
+     * Used when players give up their turns
+     * @param C     Letter missing from tray
+     * @return      added successfully
+     */
+    //TODO: move this to the gameplay methpd
+    public boolean getRandomLetterFromBag(char C) {
+        Random random = new Random();
+        Object[] letters = this.tileBag.keySet().toArray();
+        Object randomLetter = letters[random.nextInt(letters.length)];
+
+        if (this.tileBag.get(randomLetter) == 0) {
+            // pick a diff letter if the letter has all been used already
+        }
+
+        else {
+            // this take that letter and removed it from the bad
+            Object numberOfThatLetter = this.tileBag.get(randomLetter);
+            int newValue = this.tileBag.get(randomLetter) -1;
+            this.tileBag.put((Character) randomLetter, newValue);
+            System.out.println(randomLetter);
+            // lettersTray[i] = String.valueOf(randomLetter);
+        }
+        return true;
+
     }
 
 

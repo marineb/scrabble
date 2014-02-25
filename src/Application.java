@@ -34,50 +34,16 @@ public class Application {
         // Code here.
 
         // TODO: We create user 1 their set of letters and show it to them
+        // TODO: We actually need to keep track of which user needs to play next
+        // I guess it's ok for the first time to refill both users' tray.
+        one.refillTray(game);
+        // two.refillTray(game);
 
 
 
-
-        String[] lettersTray = new String[7];
-        lettersTray[0] = "A";
-        lettersTray[1] = "C";
-        //lettersTray[2] = "w";
-        lettersTray[3] = "I";
-        //lettersTray[4] = "p";
-        lettersTray[5] = "Q";
-        lettersTray[6] = "M";
-        //System.out.println(one.getName()+", your tiles are ["+lettersTray[0]+"_"+ lettersTray[1] +"_"+lettersTray[2]+"_"+lettersTray[3]+"_"+lettersTray[4]+"_"+lettersTray[5]+"_"+lettersTray[6]+"]");
-
-        int lettersMissing = 0;
-        for (int i=0 ; i < lettersTray.length ; i++ ) {
-            if (lettersTray[i] == null) {
-
-                Random random = new Random();
-                Object[] letters = game.tileBag.keySet().toArray();
-                Object randomLetter = letters[random.nextInt(letters.length)];
-
-                if (game.tileBag.get(randomLetter) == 0) {
-                    // pick a diff letter if the letter has all been used already
-                }
-
-                else {
-                    Object numberOfThatLetter = game.tileBag.get(randomLetter);
-                    int newValue = game.tileBag.get(randomLetter) -1;
-                    game.tileBag.put((Character) randomLetter, newValue);
-                    System.out.println(randomLetter);
-                    lettersTray[i] = String.valueOf(randomLetter);
-                }
-            }
-        }
-
-        System.out.println(one.getName()+", your tiles are ["+lettersTray[0]+"_"+ lettersTray[1] +"_"+lettersTray[2]+"_"+lettersTray[3]+"_"+lettersTray[4]+"_"+lettersTray[5]+"_"+lettersTray[6]+"]");
-
-        // TODO: This part doesn't work. Need to think about the way to store these letters.
-        one.setLetters(lettersTray);
-        System.out.println(lettersTray);
-        System.out.println(one.getLetters());
 
         // Loops through the different players' turns (not happening yet!! :) )
+        // This stuff will have to be in the rule/move classes
         System.out.println(one.getName() + ", type a word to start with.");
         String theWord = scanner.next();
         // check if the word is valid itself
