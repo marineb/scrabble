@@ -61,7 +61,7 @@ public class Player  {
             if (lettersTray[i] == null) {
 
                 //board.removeTileFromBag('i');
-                // TODO: figure out above how to access stuff.
+                // TODO: figure out above how to access stuff now that it is in gameplay
                 // pass in the game as a parameter in the function -- pass in "board"
                 //
                 System.out.println(i);
