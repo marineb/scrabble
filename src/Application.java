@@ -49,27 +49,27 @@ public class Application {
         // See how many letters a user is missing, refill their tile tray
         // TODO: here this is not even happening for a user.
 
-        int lettersMissing = 0;
-        for (int i=0 ; i < lettersTray.length ; i++ ) {
-            if (lettersTray[i] == null) {
-
-                Random random = new Random();
-                Object[] letters = game.tileBag.keySet().toArray();
-                Object randomLetter = letters[random.nextInt(letters.length)];
-
-                if (game.tileBag.get(randomLetter) == 0) {
-                    // pick a diff letter if the letter has all been used already
-                }
-
-                else {
-                    Object numberOfThatLetter = game.tileBag.get(randomLetter);
-                    int newValue = game.tileBag.get(randomLetter) -1;
-                    game.tileBag.put((Character) randomLetter, newValue);
-                    System.out.println(randomLetter);
-                    lettersTray[i] = String.valueOf(randomLetter);
-                }
-            }
-        }
+//        int lettersMissing = 0;
+//        for (int i=0 ; i < lettersTray.length ; i++ ) {
+//            if (lettersTray[i] == null) {
+//
+//                Random random = new Random();
+//                Object[] letters = game.tileBag.keySet().toArray();
+//                Object randomLetter = letters[random.nextInt(letters.length)];
+//
+//                if (game.tileBag.get(randomLetter) == 0) {
+//                    // pick a diff letter if the letter has all been used already
+//                }
+//
+//                else {
+//                    Object numberOfThatLetter = game.tileBag.get(randomLetter);
+//                    int newValue = game.tileBag.get(randomLetter) -1;
+//                    game.tileBag.put((Character) randomLetter, newValue);
+//                    System.out.println(randomLetter);
+//                    lettersTray[i] = String.valueOf(randomLetter);
+//                }
+//            }
+//        }
 
         System.out.println(one.getName()+", your tiles are ["+lettersTray[0]+"_"+ lettersTray[1] +"_"+lettersTray[2]+"_"+lettersTray[3]+"_"+lettersTray[4]+"_"+lettersTray[5]+"_"+lettersTray[6]+"]");
 
