@@ -60,7 +60,8 @@ public class Player  {
         for (int i=0 ; i < lettersTray.length ; i++ ) {
             if (lettersTray[i] == null) {
 
-                board.removeTileFromBag('i');
+                //board.removeTileFromBag('i');
+                // TODO: figure out above how to access stuff.
                 // pass in the game as a parameter in the function -- pass in "board"
                 //
                 System.out.println(i);

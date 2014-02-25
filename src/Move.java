@@ -20,8 +20,8 @@ public class Move {
 
     /**
      * constructs a move object
-     * @param word
-     * @param direction
+     * @param word          the word to be constructed
+     * @param direction     direction
      * @param coordinate
      */
     public Move(char[] word, int direction, int coordinate) {

@@ -40,8 +40,6 @@ public class Application {
         // two.refillTray(game);
 
 
-
-
         // Loops through the different players' turns (not happening yet!! :) )
         // This stuff will have to be in the rule/move classes
         System.out.println(one.getName() + ", type a word to start with.");
