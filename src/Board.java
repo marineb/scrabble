@@ -13,11 +13,10 @@ import java.util.HashSet;
  * TODO: Representation of a word? - Could be a String by concatenating the Characters
  */
 public class Board {
-    char[][] scrabbleBoard;
-
-    HashMap<Character, Integer> tileBag;    //unchecked warning without types
-    HashMap<Character, Integer> tileScore;
-    HashSet<String> dict;
+    private char[][] scrabbleBoard;
+    private HashMap<Character, Integer> tileBag;    //unchecked warning without types
+    private HashMap<Character, Integer> tileScore;
+    private HashSet<String> dict;
 
     public Board() {
         this.scrabbleBoard = new char[15][15];
@@ -150,7 +149,7 @@ public class Board {
      * @return      removed successfully
      */
     public boolean removeTileFromBag(char C) {
-        if (this.tileBag.containsKey(C)) {
+        if (this.tileBag.containsKey(C) && this.tileBag.get(C) > 0) {
             int newValue = this.tileBag.get(C) - 1;
             this.tileBag.put(C, newValue);
             return true;
