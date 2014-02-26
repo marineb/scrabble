@@ -5,7 +5,6 @@
  * Created by mscndle on 2/24/14.
  */
 
-
 import java.util.HashMap;
 
 /**
@@ -103,10 +102,8 @@ public class Gameplay {
      * @return      Score for a tile
      */
     private int getTileScore(Character C) {
-        if (this.tileScore.containsKey(C)) {
-            return this.tileScore.get(C);
-        }
-        return -1;
+        if (!this.tileScore.containsKey(C)) { throw new IllegalArgumentException(); }
+        return this.tileScore.get(C);
     }
 
     /**
