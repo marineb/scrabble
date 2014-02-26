@@ -17,6 +17,7 @@ public class Gameplay {
 
     private HashMap<Character, Integer> tileBag;    //unchecked warning without types
     private HashMap<Character, Integer> tileScore;
+    //private String[] lettersTray;
 
     public Gameplay() {
         this.initTileBag();
@@ -139,14 +140,11 @@ public class Gameplay {
     }
 
 
-
     /**
      * Used when players give up their turns
      * @param C     Letter missing from tray
-     * @return      added successfully
      */
-    //TODO: move this to the gameplay methpd
-    public boolean getRandomLetterFromBag(char C) {
+    public Object getRandomLetterFromBag(char C) {
         Random random = new Random();
         Object[] letters = this.tileBag.keySet().toArray();
         Object randomLetter = letters[random.nextInt(letters.length)];
@@ -160,12 +158,33 @@ public class Gameplay {
             Object numberOfThatLetter = this.tileBag.get(randomLetter);
             int newValue = this.tileBag.get(randomLetter) -1;
             this.tileBag.put((Character) randomLetter, newValue);
-            System.out.println(randomLetter);
-            // lettersTray[i] = String.valueOf(randomLetter);
         }
-        return true;
-
+        return randomLetter;
     }
+
+    public void createNewPlayer(Player player){
+        player.setLetters(new String[]{"", "", "", "", "", "", ""});
+    }
+
+    public void refillTray(Player player) {
+        String[] lettersTray = player.getLetters();
+        int lettersMissing = 0;
+        for (int i=0 ; i < lettersTray.length ; i++ ) {
+            if (lettersTray[i] == "") {
+                lettersTray[i] = String.valueOf(this.getRandomLetterFromBag('i'));
+            }
+        }
+        player.setLetters(lettersTray);
+    }
+
+    public void showTray(Player player) {
+        System.out.print(player.getName() + ", your turn: ");
+        for (int i=0 ; i < player.getLetters().length; i++) {
+            System.out.print(player.getLetters()[i] + " ");
+        }
+        System.out.println(" ");
+    }
+
 
 
 

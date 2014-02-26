@@ -28,16 +28,20 @@ public class Application {
         Board game = new Board();
         //System.out.println("board initialization complete");
 
+        // do we need to initialize this thing? I did that to access it.
+        Gameplay gameplay = new Gameplay();
+
+
         //System.out.println("hello score: " + game.calculateWordScore("hello"));
 
         // TODO: Here we should visualize the board to the user.
         // Code here.
 
-        // TODO: We create user 1 their set of letters and show it to them
         // TODO: We actually need to keep track of which user needs to play next
-        // I guess it's ok for the first time to refill both users' tray.
-        one.refillTray(game);
-        // two.refillTray(game);
+        gameplay.createNewPlayer(one);
+        gameplay.refillTray(one);
+        gameplay.showTray(one);
+        // two.refillTray(gameplay);
 
 
         // Loops through the different players' turns (not happening yet!! :) )
