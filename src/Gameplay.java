@@ -5,7 +5,9 @@
  * Created by mscndle on 2/24/14.
  */
 
+
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * This class handles move validation and score handling
@@ -15,6 +17,7 @@ public class Gameplay {
 
     private HashMap<Character, Integer> tileBag;    //unchecked warning without types
     private HashMap<Character, Integer> tileScore;
+    //private String[] lettersTray;
 
     public Gameplay() {
         this.initTileBag();
@@ -102,8 +105,10 @@ public class Gameplay {
      * @return      Score for a tile
      */
     private int getTileScore(Character C) {
-        if (!this.tileScore.containsKey(C)) { throw new IllegalArgumentException(); }
-        return this.tileScore.get(C);
+        if (this.tileScore.containsKey(C)) {
+            return this.tileScore.get(C);
+        }
+        return -1;
     }
 
     /**
@@ -132,6 +137,52 @@ public class Gameplay {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * Used when players give up their turns
+     * @param C     Letter missing from tray
+     */
+    public Object getRandomLetterFromBag(char C) {
+        Random random = new Random();
+        Object[] letters = this.tileBag.keySet().toArray();
+        Object randomLetter = letters[random.nextInt(letters.length)];
+
+        if (this.tileBag.get(randomLetter) == 0) {
+            // pick a diff letter if the letter has all been used already
+        }
+
+        else {
+            // this take that letter and removed it from the bad
+            Object numberOfThatLetter = this.tileBag.get(randomLetter);
+            int newValue = this.tileBag.get(randomLetter) -1;
+            this.tileBag.put((Character) randomLetter, newValue);
+        }
+        return randomLetter;
+    }
+
+    public void createNewPlayer(Player player){
+        player.setLetters(new String[]{"", "", "", "", "", "", ""});
+    }
+
+    public void refillTray(Player player) {
+        String[] lettersTray = player.getLetters();
+        int lettersMissing = 0;
+        for (int i=0 ; i < lettersTray.length ; i++ ) {
+            if (lettersTray[i] == "") {
+                lettersTray[i] = String.valueOf(this.getRandomLetterFromBag('i'));
+            }
+        }
+        player.setLetters(lettersTray);
+    }
+
+    public void showTray(Player player) {
+        System.out.print(player.getName() + ", your turn: ");
+        for (int i=0 ; i < player.getLetters().length; i++) {
+            System.out.print(player.getLetters()[i] + " ");
+        }
+        System.out.println(" ");
     }
 
 
