@@ -150,27 +150,21 @@ public class Gameplay {
         Object randomLetter = letters[random.nextInt(letters.length)];
 
         if (this.tileBag.get(randomLetter) == 0) {
-            // pick a diff letter if the letter has all been used already
+            // need to call this function again
         }
 
         else {
-            // this take that letter and removed it from the bad
-            Object numberOfThatLetter = this.tileBag.get(randomLetter);
             int newValue = this.tileBag.get(randomLetter) -1;
             this.tileBag.put((Character) randomLetter, newValue);
         }
         return randomLetter;
     }
 
-    public void createNewPlayer(Player player){
-        player.setLetters(new String[]{"", "", "", "", "", "", ""});
-    }
-
     public void refillTray(Player player) {
         String[] lettersTray = player.getLetters();
         int lettersMissing = 0;
         for (int i=0 ; i < lettersTray.length ; i++ ) {
-            if (lettersTray[i] == "") {
+            if (lettersTray[i] == "" || lettersTray[i] == null) {
                 lettersTray[i] = String.valueOf(this.getRandomLetterFromBag('i'));
             }
         }

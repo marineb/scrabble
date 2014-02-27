@@ -12,54 +12,106 @@ public class Application {
         System.out.println(" ");
 
 
-        // Players are created
+        // Game and gameplay initialized
+        Board game = new Board();
+        Gameplay gameplay = new Gameplay();
+
+
+        // Create two players
+        Player one = new Player("", 1, new String[7]);
+        Player two= new Player("", 2, new String[7]);
         String[] playerNames = new String[2];
         for (int i = 0 ; i < playerNames.length ; i++) {
             System.out.println("Enter the name of player "+ (i+1) +" : ");
             playerNames[i] = scanner.next();
         }
-
-        Player one = new Player();
-        Player two = new Player();
         one.setName(playerNames[0]);
         two.setName(playerNames[1]);
 
-        // Game is initialized
-        Board game = new Board();
-        //System.out.println("board initialization complete");
 
-        // do we need to initialize this thing? I did that to access it.
-        Gameplay gameplay = new Gameplay();
-
-
-        //System.out.println("hello score: " + game.calculateWordScore("hello"));
-
-        // TODO: Here we should visualize the board to the user.
-        // Code here.
-
-        // TODO: We actually need to keep track of which user needs to play next
-        gameplay.createNewPlayer(one);
-        gameplay.refillTray(one);
-        gameplay.showTray(one);
-        // two.refillTray(gameplay);
+        // Managing Turns
+        // Not happy about this. Talked to Sandeep who suggested
+        // creating a class changeTurn that takes player, and turn #
+        // this should be managed somewhere else. in gameplay probably.
+        int turn = 1;
+        boolean gameOn = true;
 
 
-        // Loops through the different players' turns (not happening yet!! :) )
-        // This stuff will have to be in the rule/move classes
-        System.out.println(one.getName() + ", type a word to start with.");
-        String theWord = scanner.next();
-        // check if the word is valid itself
-        if (game.validateWord(theWord) == true ) {
-            System.out.println(theWord +" is valid!");
+        // player one will play
+        while (gameOn) {
+            if (turn == 1) {
+                //draw board --> this is not working game.toString();
+                gameplay.refillTray(one);
+                gameplay.showTray(one);
+                System.out.println(one.getName() + ", type a word to start with (skip: *, quit: #)");
+                String theWord = scanner.next();
+
+                if (theWord.equals("*")) {
+                    System.out.println("You decided to skip your turn.");
+                    System.out.println("");
+                    turn = 2;
+                }
+                else if (theWord.equals("#")) {
+                    turn = 3;
+                }
+                else {
+                    // check if the word is valid itself and placement is valid and uses tray
+                    if (game.validateWord(theWord) == true ) {
+                        System.out.println(theWord +" is valid!");
+                        // place word on board
+                        // calculate score
+                        // add score to total score
+                    }
+                    else {
+                        // if word isn't working
+                        // put letters back in tray
+                        System.out.println("Sorry, your word isn't valid.");
+                        System.out.println("");
+                        turn = 2;
+                    }
+
+                }
+
+
+            }
+            else if (turn == 2) {
+                //draw board --> this is not working game.toString();
+                gameplay.refillTray(two);
+                gameplay.showTray(two);
+                System.out.println(two.getName() + ", type a word to start with (skip: *, quit: #)");
+                String theWord = scanner.next();
+
+                if (theWord.equals("*")) {
+                    System.out.println("You decided to skip your turn.");
+                    System.out.println("");
+                    turn = 1;
+                }
+                else if (theWord.equals("#")) {
+                    gameOn = false;
+                }
+                else {
+
+                    // check if the word is valid itself and placement is valid and uses tray
+                    if (game.validateWord(theWord) == true ) {
+                        System.out.println(theWord +" is valid!");
+                        // place word on board
+                        // calculate score
+                        // add score to total score
+                    }
+                    else {
+                        // if word isn't working
+                        // put letters back in tray
+                        System.out.println("Sorry, your word isn't valid.");
+                        System.out.println("");
+                        turn = 2;
+                    }
+
+                }
+
+            }
+
         }
 
-        // TODO: check if the word is being placed in valid location and is still valid with letters around it
-        // TODO: place word on board
-        // TODO: remove letters from player 1
-        // TODO: calculate score for player 1
-        // TODO: add score to score table
-        // TODO: fill up letters' tray for player 1
-        // TODO: player 2 plays -- this will go into a loop after
 
     }
 
