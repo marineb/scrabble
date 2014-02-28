@@ -17,7 +17,6 @@ public class Gameplay {
 
     private HashMap<Character, Integer> tileBag;    //unchecked warning without types
     private HashMap<Character, Integer> tileScore;
-    //private String[] lettersTray;
 
     public Gameplay() {
         this.initTileBag();
@@ -162,7 +161,7 @@ public class Gameplay {
         return randomLetter;
     }
 
-    public void createNewPlayer(Player player){
+    public void createNewPlayer(Player player) {
         player.setLetters(new String[]{"", "", "", "", "", "", ""});
     }
 
