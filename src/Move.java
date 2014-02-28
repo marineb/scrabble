@@ -12,20 +12,29 @@
  */
 
 public class Move {
-    char[] word;
+
+    public static final int RIGHT = 1;
+    public static final int DOWN  = 2;
+
+    String word;
     int direction;
-    int coordinate;     //starting coordinate of the word
+    int startRow;
+    int startCol;
     boolean isValid;
 
 
     /**
-     * constructs a move object
-     * @param word          the word to be constructed
-     * @param direction     direction
-     * @param coordinate
+     * Constructs a move object
+     * @param word      the word to be constructed
+     * @param direction direction
+     * @param startRow  starting row coordinate of the move
+     * @param startCol  starting col coordinate of the move
      */
-    public Move(char[] word, int direction, int coordinate) {
-
+    public Move(String word, int direction, int startRow, int startCol) {
+        this.word = word;
+        this.direction = direction;
+        this.startRow = startRow;
+        this.startCol = startCol;
     }
 
     /**
@@ -41,10 +50,9 @@ public class Move {
      * @param word  player's input
      * @return      T/F if move is valid
      */
-    public boolean isWordValid(char[] word) {
-
-
-        return false;
+    //TODO: Not sure if we need this since we have this method in Board class
+    public boolean isWordValid(String word) {
+        return Board.validateWord(word);
     }
 
 
