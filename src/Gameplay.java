@@ -159,6 +159,11 @@ public class Gameplay {
         return randomLetter;
     }
 
+    public void createNewPlayer(Player player) {
+        player.setLetters(new String[]{"", "", "", "", "", "", ""});
+    }
+
+
     public void refillTray(Player player) {
         String[] lettersTray = player.getLetters();
         int lettersMissing = 0;
