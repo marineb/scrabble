@@ -163,9 +163,6 @@ public class Gameplay {
     }
 
 
-
-
-
     public void createNewPlayers() {
         Scanner scanner = new Scanner(System.in);
         for (int i=0; i < players.length; i++) {
