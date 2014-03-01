@@ -18,6 +18,8 @@ public class Gameplay {
 
     private HashMap<Character, Integer> tileBag;    //unchecked warning without types
     private HashMap<Character, Integer> tileScore;
+    private Player[] players = new Player[2];
+    private int turn;
 
     public Gameplay() {
         this.initTileBag();
@@ -162,11 +164,10 @@ public class Gameplay {
 
 
 
-    Player[] players = new Player[2];
+
 
     public void createNewPlayers() {
         Scanner scanner = new Scanner(System.in);
-
         for (int i=0; i < players.length; i++) {
             System.out.println("Enter the name of player "+ (i+1) +" : ");
             players[i] = new Player(scanner.next(), i, new String[7]);
@@ -174,42 +175,65 @@ public class Gameplay {
         }
     }
 
-    public void gameOn(){
+    public void endGame() {
+        System.out.println("Game Over!");
+        System.out.println("Thanks for playing "+players[0].getName()+" and "+players[1].getName()+"!");
+    }
+
+
+    public int switchTurn() {
+        if (turn == 1 || turn == 0) {
+            turn = 2;
+        }
+        else if (turn == 2) {
+            turn = 1;
+        }
+        return turn;
+    }
+
+    public void gameOn(int turn){
+        Player thePlayer = null;
+        if (turn == 1) {
+            thePlayer = players[0];
+        }
+        else if (turn == 2) {
+            thePlayer = players[1];
+        }
         Board game = new Board();
         Scanner scanner = new Scanner(System.in);
-        System.out.println(game.toString());
-        refillTray(players[0]);
-        showTray(players[0]);
-        System.out.println(players[0].getName() + ", enter a word (skip: *, quit: #)");
+        // Hiding the board for now, for testing. it's big and annoying! :)
+        // System.out.println(game.toString());
+        refillTray(thePlayer);
+        showTray(thePlayer);
+        System.out.println(thePlayer.getName() + ", enter a word (skip: *, quit: #)");
         String theWord = scanner.next();
 
         if (theWord.equals("*")) {
             System.out.println("You decided to skip your turn.");
             System.out.println("");
-            //turn = 2;
+            gameOn(switchTurn());
         }
         else if (theWord.equals("#")) {
-            //turn = 3;
+            endGame();
         }
         else {
-            // check if the word is valid itself and placement is valid and uses tray
             if (Board.validateWord(theWord) == true ) {
                 System.out.println(theWord +" is valid!");
                 // place word on board
                 // calculate score
                 // add score to total score
-            //}
-            //else {
+                gameOn(switchTurn());
+            }
+            else {
                 // if word isn't working
                 // put letters back in tray
                 System.out.println("Sorry, your word isn't valid.");
                 System.out.println("");
-                //turn = 2;
+                gameOn(switchTurn());
             }
         }
 
     }
-
 
 
     public void refillTray(Player player) {

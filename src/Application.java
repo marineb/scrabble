@@ -11,7 +11,7 @@ public class Application {
 
         Gameplay gameplay = new Gameplay();
         gameplay.createNewPlayers();
-        gameplay.gameOn();
+        gameplay.gameOn(1);
 
     }
 
