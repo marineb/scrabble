@@ -8,6 +8,7 @@
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * This class handles move validation and score handling
@@ -159,9 +160,56 @@ public class Gameplay {
         return randomLetter;
     }
 
-    public void createNewPlayer(Player player) {
-        player.setLetters(new String[]{"", "", "", "", "", "", ""});
+
+
+    Player[] players = new Player[2];
+
+    public void createNewPlayers() {
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i=0; i < players.length; i++) {
+            System.out.println("Enter the name of player "+ (i+1) +" : ");
+            players[i] = new Player(scanner.next(), i, new String[7]);
+
+        }
     }
+
+    public void gameOn(){
+        Board game = new Board();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(game.toString());
+        refillTray(players[0]);
+        showTray(players[0]);
+        System.out.println(players[0].getName() + ", enter a word (skip: *, quit: #)");
+        String theWord = scanner.next();
+
+        if (theWord.equals("*")) {
+            System.out.println("You decided to skip your turn.");
+            System.out.println("");
+            //turn = 2;
+        }
+        else if (theWord.equals("#")) {
+            //turn = 3;
+        }
+        else {
+            // check if the word is valid itself and placement is valid and uses tray
+            if (Board.validateWord(theWord) == true ) {
+                System.out.println(theWord +" is valid!");
+                // place word on board
+                // calculate score
+                // add score to total score
+            //}
+            //else {
+                // if word isn't working
+                // put letters back in tray
+                System.out.println("Sorry, your word isn't valid.");
+                System.out.println("");
+                //turn = 2;
+            }
+        }
+
+    }
+
 
 
     public void refillTray(Player player) {
@@ -174,6 +222,8 @@ public class Gameplay {
         }
         player.setLetters(lettersTray);
     }
+
+
 
     public void showTray(Player player) {
         System.out.print(player.getName() + ", your turn: ");
