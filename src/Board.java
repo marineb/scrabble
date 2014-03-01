@@ -89,10 +89,45 @@ public class Board {
         boardScores.put("1212", "2W");
         boardScores.put("1313", "2W");
 
-        //TODO: complete adding the board scores
+        //TRIPLE LETTER
+        boardScores.put("51", "3L");
+        boardScores.put("91", "3L");
+        boardScores.put("15", "3L");
+        boardScores.put("55", "3L");
+        boardScores.put("95", "3L");
+        boardScores.put("135", "3L");
+        boardScores.put("19", "3L");
+        boardScores.put("59", "3L");
+        boardScores.put("99", "3L");
+        boardScores.put("139", "3L");
+        boardScores.put("513", "3L");
+        boardScores.put("913", "3L");
 
-
-
+        //DOUBLE LETTER
+        boardScores.put("30", "2L");
+        boardScores.put("110", "2L");
+        boardScores.put("62", "2L");
+        boardScores.put("82", "2L");
+        boardScores.put("03", "2L");
+        boardScores.put("73", "2L");
+        boardScores.put("143", "2L");
+        boardScores.put("26", "2L");
+        boardScores.put("66", "2L");
+        boardScores.put("86", "2L");
+        boardScores.put("126", "2L");
+        boardScores.put("37", "2L");
+        boardScores.put("117", "2L");
+        boardScores.put("28", "2L");
+        boardScores.put("68", "2L");
+        boardScores.put("88", "2L");
+        boardScores.put("128", "2L");
+        boardScores.put("011", "2L");
+        boardScores.put("711", "2L");
+        boardScores.put("1411", "2L");
+        boardScores.put("612", "2L");
+        boardScores.put("812", "2L");
+        boardScores.put("314", "2L");
+        boardScores.put("1114", "2L");
     }
 
     /**

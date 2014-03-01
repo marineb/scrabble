@@ -143,7 +143,7 @@ public class Gameplay {
      * Used when players give up their turns
      * @param C     Letter missing from tray
      */
-    public Object getRandomLetterFromBag(char C) {s
+    public Object getRandomLetterFromBag(char C) {
         Random random = new Random();
         Object[] letters = this.tileBag.keySet().toArray();
         Object randomLetter = letters[random.nextInt(letters.length)];
