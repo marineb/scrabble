@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import java.util.Scanner;
+>>>>>>> 58175040576fb9a8474b88b4724dd41ba78b2117
 
 public class Player  {
 
@@ -5,6 +9,7 @@ public class Player  {
     private int id;
     private String[] letters;
     private int currentScore;
+    private Player[] players;
 
     public Player (String name, int id, String[] letters) {
         this.name = name;
@@ -47,5 +52,11 @@ public class Player  {
         this.letters = letters;
     }
 
+    public Player[] getPlayers() {
+        return players;
+    }
 
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
 }

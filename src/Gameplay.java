@@ -8,6 +8,7 @@
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * This class handles move validation and score handling
@@ -17,6 +18,8 @@ public class Gameplay {
 
     private HashMap<Character, Integer> tileBag;    //unchecked warning without types
     private HashMap<Character, Integer> tileScore;
+    private Player[] players = new Player[2];
+    private int turn;
 
     public Gameplay() {
         this.initTileBag();
@@ -159,8 +162,74 @@ public class Gameplay {
         return randomLetter;
     }
 
-    public void createNewPlayer(Player player) {
-        player.setLetters(new String[]{"", "", "", "", "", "", ""});
+
+    public void createNewPlayers() {
+        Scanner scanner = new Scanner(System.in);
+        for (int i=0; i < players.length; i++) {
+            System.out.println("Enter the name of player "+ (i+1) +" : ");
+            players[i] = new Player(scanner.next(), i, new String[7]);
+
+        }
+    }
+
+    public void endGame() {
+        System.out.println("Game Over!");
+        System.out.println("Thanks for playing "+players[0].getName()+" and "+players[1].getName()+"!");
+    }
+
+
+    public int switchTurn() {
+        if (turn == 1 || turn == 0) {
+            turn = 2;
+        }
+        else if (turn == 2) {
+            turn = 1;
+        }
+        return turn;
+    }
+
+    public void gameOn(int turn){
+        Player thePlayer = null;
+        if (turn == 1) {
+            thePlayer = players[0];
+        }
+        else if (turn == 2) {
+            thePlayer = players[1];
+        }
+        Board game = new Board();
+        Scanner scanner = new Scanner(System.in);
+        // Hiding the board for now, for testing. it's big and annoying! :)
+        // System.out.println(game.toString());
+        refillTray(thePlayer);
+        showTray(thePlayer);
+        System.out.println(thePlayer.getName() + ", enter a word (skip: *, quit: #)");
+        String theWord = scanner.next();
+
+        if (theWord.equals("*")) {
+            System.out.println("You decided to skip your turn.");
+            System.out.println("");
+            gameOn(switchTurn());
+        }
+        else if (theWord.equals("#")) {
+            endGame();
+        }
+        else {
+            if (Board.validateWord(theWord) == true ) {
+                System.out.println(theWord +" is valid!");
+                // place word on board
+                // calculate score
+                // add score to total score
+                gameOn(switchTurn());
+            }
+            else {
+                // if word isn't working
+                // put letters back in tray
+                System.out.println("Sorry, your word isn't valid.");
+                System.out.println("");
+                gameOn(switchTurn());
+            }
+        }
+
     }
 
 
@@ -174,6 +243,8 @@ public class Gameplay {
         }
         player.setLetters(lettersTray);
     }
+
+
 
     public void showTray(Player player) {
         System.out.print(player.getName() + ", your turn: ");
