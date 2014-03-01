@@ -1,4 +1,4 @@
-
+import java.lang.reflect.Field;
 
 public class Player  {
 
@@ -47,7 +47,6 @@ public class Player  {
     public void setLetters(String[] letters) {
         this.letters = letters;
     }
-
 
 
 }

@@ -17,7 +17,6 @@ public class Gameplay {
 
     private HashMap<Character, Integer> tileBag;    //unchecked warning without types
     private HashMap<Character, Integer> tileScore;
-    //private String[] lettersTray;
 
     public Gameplay() {
         this.initTileBag();
@@ -150,7 +149,7 @@ public class Gameplay {
         Object randomLetter = letters[random.nextInt(letters.length)];
 
         if (this.tileBag.get(randomLetter) == 0) {
-            // need to call this function again
+            // need to go recursive on the getRandomLetterFromBag function
         }
 
         else {
@@ -178,11 +177,6 @@ public class Gameplay {
         }
         System.out.println(" ");
     }
-
-
-
-
-
 
 
 
