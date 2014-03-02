@@ -1,3 +1,4 @@
+import java.util.*;
 
 
 public class Application {
@@ -9,7 +10,13 @@ public class Application {
         System.out.println("---------------------------------");
         System.out.println(" ");
 
+        /*  Initialize all required classes */
+        Board gameBoard = new Board();
         Gameplay gameplay = new Gameplay();
+        //Scores scores = new Scores();
+        View view = new View(); //Not sure if this is necessary, all it contains is static methods
+
+
         gameplay.createNewPlayers();
         gameplay.gameOn(1);
 

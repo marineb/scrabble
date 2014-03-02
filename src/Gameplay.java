@@ -5,10 +5,7 @@
  * Created by mscndle on 2/24/14.
  */
 
-
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * This class handles move validation and score handling
@@ -17,21 +14,17 @@ import java.util.Scanner;
 public class Gameplay {
 
     private HashMap<Character, Integer> tileBag;    //unchecked warning without types
-    private HashMap<Character, Integer> tileScore;
     private Player[] players = new Player[2];
     private int turn;
 
     public Gameplay() {
         this.initTileBag();
-        this.initTileScore();
     }
-
 
     /**
      * Tile bag initialization and distribution
-     * //TODO: Find a way to read these values directly from the file
+     * //TODO: Find a way to read these values directly from the file (if time permits)
      */
-    //@SuppressWarnings("unchecked")        //not sure if suppressing warnings is good practice
     private void initTileBag() {
         this.tileBag =  new HashMap<Character, Integer>();
         if (this.tileBag.isEmpty()) {
@@ -62,55 +55,6 @@ public class Gameplay {
             this.tileBag.put('Y', 2);
             this.tileBag.put('Z', 1);
         }
-    }
-
-
-
-    /**
-     * Initializes tile scores in another hashmap
-     * //TODO: Find a way to read these directly from the file
-     */
-    public void initTileScore() {
-        this.tileScore = new HashMap<Character, Integer>();
-        if (this.tileScore.isEmpty()) {
-            this.tileScore.put('A', 1);
-            this.tileScore.put('B', 3);
-            this.tileScore.put('C', 3);
-            this.tileScore.put('D', 2);
-            this.tileScore.put('E', 1);
-            this.tileScore.put('F', 2);
-            this.tileScore.put('G', 2);
-            this.tileScore.put('H', 4);
-            this.tileScore.put('I', 1);
-            this.tileScore.put('J', 8);
-            this.tileScore.put('K', 5);
-            this.tileScore.put('L', 1);
-            this.tileScore.put('M', 3);
-            this.tileScore.put('N', 1);
-            this.tileScore.put('O', 1);
-            this.tileScore.put('P', 3);
-            this.tileScore.put('Q', 10);
-            this.tileScore.put('R', 1);
-            this.tileScore.put('S', 1);
-            this.tileScore.put('T', 1);
-            this.tileScore.put('U', 1);
-            this.tileScore.put('V', 4);
-            this.tileScore.put('W', 4);
-            this.tileScore.put('X', 8);
-            this.tileScore.put('Y', 4);
-            this.tileScore.put('Z', 10);
-        }
-    }
-
-    /**
-     * @param C     Tile to be scored
-     * @return      Score for a tile
-     */
-    private int getTileScore(Character C) {
-        if (this.tileScore.containsKey(C)) {
-            return this.tileScore.get(C);
-        }
-        return -1;
     }
 
     /**
@@ -188,20 +132,20 @@ public class Gameplay {
         return turn;
     }
 
-    public void gameOn(int turn){
+    public void gameOn(int turn) {
         Player thePlayer = null;
         if (turn == 1) {
             thePlayer = players[0];
-        }
-        else if (turn == 2) {
+        } else if (turn == 2) {
             thePlayer = players[1];
         }
+
         Board game = new Board();
         Scanner scanner = new Scanner(System.in);
         // Hiding the board for now, for testing. it's big and annoying! :)
         System.out.println(game.toString());
         refillTray(thePlayer);
-        showTray(thePlayer);
+        View.showTray(thePlayer);
         System.out.println(thePlayer.getName() + ", enter a word (skip: *, quit: #)");
         String theWord = scanner.next();
 
@@ -213,7 +157,7 @@ public class Gameplay {
             endGame();
         }
         else {
-            if (Board.validateWord(theWord) == true ) {
+            if (Board.validateWord(theWord)) {
                 System.out.println(theWord +" is valid!");
                 // Remove letters from user's tray
                 // place word on board
@@ -242,14 +186,256 @@ public class Gameplay {
         player.setLetters(lettersTray);
     }
 
+    /**
+     * CAN YOU PLAY THAT MOVE ?
+     * @param move  Move object played
+     * @return      boolean
+     */
+    public boolean isMoveValid(Player player, Move move, Board board) {
+        String word = move.word;
+        int row = move.startRow;
+        int col = move.startCol;
+        int dir = move.direction;
+        String[] tileCopy = player.getLetters();
+        Arrays.sort(tileCopy);
+        boolean tilesPresent = false;
 
+        // DOES THE BOARD OVERFLOW
+        if ((dir == Move.RIGHT && (col + word.length() > 14)) ||
+                (dir == Move.DOWN && (row + word.length() > 14))) {
+            System.out.println("Board overflow. Invalid move!");
+            return false;
+        }
+
+        // IS THE WORD VALID USING A DICT
+        if (!Board.validateWord(word)) {
+            System.out.println("Word doesn't exist in the Dictionary");
+            return false;
+        }
+
+        // INTENDED WORD SHOULD BE THE LARGEST CONTIGUOUS STRING IN THAT DIRECTION
+        if (dir == Move.RIGHT) {
+            if (board.getTileOnBoard(row, col+word.length()+1) != ' ' ||
+                    board.getTileOnBoard(row, col-1) != ' ') {
+                System.out.println("Incomplete input word (find better message)");
+                return false;
+            }
+        } else if (dir == Move.DOWN) {
+            if (board.getTileOnBoard(row+word.length()+1, col) != ' ' ||
+                    board.getTileOnBoard(row-1, col) != ' ') {
+                System.out.println("Incomplete input word (downwards)");
+                return false;
+            }
+        }
+
+        // DOES THE FIRST MOVE CROSS THE BOARD CENTER
+        if (Move.totalNumberOfMoves == 0 && (row > 7 && col > 7)) {
+            System.out.println("First move should touch the board center!");
+            return false;
+        }
+
+<<<<<<< HEAD
     public void showTray(Player player) {
         System.out.print(player.getName() + ", your turn: ");
         for (int i=0 ; i < player.getLetters().length; i++) {
             System.out.print(player.getLetters()[i] + " ");
+=======
+        // DOES THE SECOND (or greater) MOVE TOUCH ONE OF THE EXISTING TILES
+        if (Move.totalNumberOfMoves > 0) {
+            for (int i=0; i<word.length(); i++) {
+                if (dir == Move.RIGHT) {
+                    if (board.getTileOnBoard(row, col+i) != ' ')    {   tilesPresent = true;    }
+                } else if (dir == Move.DOWN) {
+                    if (board.getTileOnBoard(row+i, col) != ' ')    {   tilesPresent = true;    }
+                }
+            }
+            if (!tilesPresent)  {
+                System.out.println("New word has to touch an existing word");
+                return false;
+            }
         }
-        System.out.println(" ");
+
+        // CAN THAT WORD BE CONSTRUCTED USING EXISTING PIECES AND PLAYER TILES
+        for (int i=0; i<word.length(); i++) {
+            if (dir == Move.RIGHT) {
+                if (board.getTileOnBoard(row, col+i) == word.charAt(i)) {
+                    //don't do anything, this is expected (unless it happens for all letters)
+                } else if (board.getTileOnBoard(row, col+i) == ' ') {
+                    //empty cell - user should have it
+                    int pos = Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i)));
+                    if (pos >= 0) {
+                        tileCopy[pos] = null;
+                    } else {
+                        System.out.println("Player does not have char: " + word.charAt(i));
+                        return false;
+                    }
+                } else {
+                    //neither empty cell nor expected char -- stepping over someone else's space
+                    System.out.println("Unknown char! unable to insert " + word.charAt(i));
+                    return false;
+                }
+            } else if (dir == Move.DOWN) {
+                if (board.getTileOnBoard(row+i, col) == word.charAt(i)) {
+                    //expected for at most all-1 cases
+                } else if (board.getTileOnBoard(row+i, col) == ' ') {
+                    //empty cell - find tile with player
+                    int pos = Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i)));
+                    if (pos >= 0) {
+                        tileCopy[pos] = null;
+                    } else {
+                        System.out.println("Player does not have char: " + word.charAt(i));
+                        return false;
+                    }
+                } else {
+                    //neither empty cell nor expected char -- stepping over someone else's space
+                    System.out.println("Unknown char! unable to insert " + word.charAt(i));
+                    return false;
+                }
+            }
+>>>>>>> mscndle
+        }
+        //no letter was used from the tray
+        if (tileCopy.length == player.getLetters().length) {
+            System.out.println("The word already exists! Try again!");
+            return false;
+        }
+
+        // ARE SECONDARY WORDS VALID IF THEY EXIST
+        ArrayList<String> secList = this.getSecondaryWords(move, board);
+        if (!this.validateSecondaryWords(secList)) {
+            System.out.println("Invalid secondary words created");
+            return false;
+        }
+
+        // IF YOU HAVE REACHED HERE, LIFE IS GOOD
+        // 1.   SET THE MOOD TO VALID
+        // 2.   SECONDARY WORDS CREATED SHOULD BE PASSED ONTO THE MOVE OBJECT
+        move.isValid = true;
+        move.secondaryWords = secList;
+        return true;
     }
+
+    /**
+     * Private helper to see if all secondary words are valid
+     * @param list  input list of secondary words
+     * @return      boolean
+     */
+    private boolean validateSecondaryWords(ArrayList<String> list) {
+        for (String str: list) {
+            if (!Board.validateWord(str)) {
+                System.out.println(str + " not valid secondary word.");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Private helper method that returns the other words formed due to a move
+     * @param move  current move
+     * @param board board object
+     * @return      List containing secondary words
+     */
+    //TODO: change back to private once done testing
+    public ArrayList<String> getSecondaryWords(Move move, Board board) {
+        ArrayList<String> secWords = new ArrayList<String>();
+        String word = move.word.toUpperCase();
+        int row = move.startRow;
+        int col = move.startCol;
+        int dir = move.direction;
+
+        for (int i=0; i<word.length(); i++) {
+            if (dir == Move.RIGHT) {
+                if (board.getTileOnBoard(row, col+i) == ' ') {
+                    //here the user is inserting a tile
+                    if (board.getTileOnBoard(row-1, col+i) != ' ' ||
+                            board.getTileOnBoard(row+1, col+i) != ' ') {
+                        System.out.println("calling construct word for: " + word.charAt(i));
+                        secWords.add(this.constructWord(row, col+i ,word.charAt(i), move, board));
+                    }
+                }
+            } else if (dir == Move.DOWN) {
+                if (board.getTileOnBoard(row+i, col) == ' ') {
+                    if (board.getTileOnBoard(row+i, col-1) != ' ' ||
+                            board.getTileOnBoard(row+i, col+1) != ' ') {
+                        System.out.println("calling construct word for: " + word.charAt(i));
+                        secWords.add(this.constructWord(row+i, col, word.charAt(i), move, board));
+                    }
+                }
+            }
+        }
+
+        return secWords;
+    }
+
+
+    /**
+     * Private helper that constructs word out of the longest contiguous string
+     * @param row   row index
+     * @param col   col index
+     * @param C
+     * @return      constructed word / null
+     */
+    private String constructWord(int row, int col, char C, Move move, Board board) {
+        StringBuilder newWord = new StringBuilder();
+        int start;
+        int end;
+        int i = 1;
+        int j = 1;
+        int dir = move.direction;
+        //String word = move.word;
+        C = Character.toUpperCase(C);
+
+        // sorry
+        // very ugly logic
+        // but it works
+        if (dir == Move.DOWN) {
+            while (col-j >= 0 && board.getTileOnBoard(row, col-j) != ' ') {
+                j++;
+            }
+            start = col-j+1;    //determine start index of word to be formed
+            j = 1;              //reset j
+
+            while (col+j <= 14 && board.getTileOnBoard(row, col+j) != ' ') {
+                j++;
+            }
+            end = col+j-1;      //determine end index of word
+
+            //construct new word
+            for (int newCol=start; newCol<=end;  newCol++) {
+                if (newCol == col) {    newWord.append(C);                  }
+                else {  newWord.append(board.getTileOnBoard(row, newCol));  }
+            }
+
+            return newWord.toString().trim();
+
+        } else if (dir == Move.RIGHT) {
+            //same logic as above in a different direction
+            while (row-i >= 0 && board.getTileOnBoard(row-i, col) != ' ') {
+                i++;
+            }
+            start = row-i+1;
+            i = 1;
+
+            while (row+i <= 14 && board.getTileOnBoard(row+i, col) != ' ') {
+                i++;
+            }
+            end = row+i-1;
+
+            for (int newRow = start; newRow <= end; newRow++) {
+                if (newRow == row) {    newWord.append(C);                  }
+                else {  newWord.append(board.getTileOnBoard(newRow, col));  }
+            }
+
+            return newWord.toString().trim();
+        }
+
+        //Ideally it should never this side of the function
+        System.out.println("constructing null");
+        return null;
+    }
+
 
 
 

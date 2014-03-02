@@ -12,6 +12,7 @@ import java.util.HashMap;
  */
 public class Board {
 
+    //TODO: change board representation to add W, w, L, l, -
     private char[][] scrabbleBoard;
     private static HashSet<String> dict;
     private static HashMap<String, String> boardScores;
@@ -29,14 +30,16 @@ public class Board {
     /**
      * Initialized the board
      */
+    //TODO: change display logic. Let View class handle the chars "-, W, w, L, l"
+    //TODO: the actual board only has tiles or is empty
     private void initBoard() {
         this.scrabbleBoard = new char[15][15];
         for (int i=0; i<15; i++) {
             for (int j=0; j<15; j++) {
-                this.scrabbleBoard[i][j] = '-';
+                this.scrabbleBoard[i][j] = ' ';
             }
         }
-        this.scrabbleBoard[7][7] = 'X';
+        this.scrabbleBoard[7][7] = ' ';
     }
 
     /**
@@ -51,7 +54,7 @@ public class Board {
 
             //add all words from words.txt to hashSet
             while (line != null) {
-                dict.add(line);
+                dict.add(line.toLowerCase());
                 line = dictReader.readLine();
             }
         } catch (IOException e) {
@@ -89,10 +92,63 @@ public class Board {
         boardScores.put("1212", "2W");
         boardScores.put("1313", "2W");
 
-        //TODO: complete adding the board scores
+        //TRIPLE LETTER
+        boardScores.put("51", "3L");
+        boardScores.put("91", "3L");
+        boardScores.put("15", "3L");
+        boardScores.put("55", "3L");
+        boardScores.put("95", "3L");
+        boardScores.put("135", "3L");
+        boardScores.put("19", "3L");
+        boardScores.put("59", "3L");
+        boardScores.put("99", "3L");
+        boardScores.put("139", "3L");
+        boardScores.put("513", "3L");
+        boardScores.put("913", "3L");
 
+        //DOUBLE LETTER
+        boardScores.put("30", "2L");
+        boardScores.put("110", "2L");
+        boardScores.put("62", "2L");
+        boardScores.put("82", "2L");
+        boardScores.put("03", "2L");
+        boardScores.put("73", "2L");
+        boardScores.put("143", "2L");
+        boardScores.put("26", "2L");
+        boardScores.put("66", "2L");
+        boardScores.put("86", "2L");
+        boardScores.put("126", "2L");
+        boardScores.put("37", "2L");
+        boardScores.put("117", "2L");
+        boardScores.put("28", "2L");
+        boardScores.put("68", "2L");
+        boardScores.put("88", "2L");
+        boardScores.put("128", "2L");
+        boardScores.put("011", "2L");
+        boardScores.put("711", "2L");
+        boardScores.put("1411", "2L");
+        boardScores.put("612", "2L");
+        boardScores.put("812", "2L");
+        boardScores.put("314", "2L");
+        boardScores.put("1114", "2L");
+    }
 
+    public static String getBoardScoreForTile(String ref) {
+        if (Board.boardScores.containsKey(ref)) {
+            return Board.boardScores.get(ref);
+        } else {
+            return null;
+        }
+    }
 
+    /**
+     * Returns the char on the board at (row, col)
+     * @param row   row index
+     * @param col   col index
+     * @return      char at (row, col)
+     */
+    public char getTileOnBoard(int row, int col) {
+        return this.scrabbleBoard[row][col];
     }
 
     /**
@@ -101,11 +157,6 @@ public class Board {
      */
     public static boolean validateWord(String word) {
         return dict.contains(word.toLowerCase());
-    }
-
-    public static String getCellScore(int coordinate) {
-
-        return "";
     }
 
     /**
@@ -128,12 +179,25 @@ public class Board {
     }
 
 
-
-    public void placeWordOnBoard(char[] word, int row, char col, int direction) {
+    // will not place the word on the board unless it's valid
+    void placeWordOnBoard(Move move) {
         //assumption is that the word is valid
+        if (move.isValid) {
+            String word = move.word;
+            int row = move.startRow;
+            int col = move.startCol;
 
-
-
+            for (int i=0; i<word.length(); i++) {
+                if (move.direction == Move.RIGHT) {
+                    //increase row val to add word to the right
+                    System.out.println("adding word to right");
+                    this.scrabbleBoard[row][col+i] = word.toUpperCase().charAt(i);
+                } else if (move.direction == Move.DOWN) {
+                    //increase col val to add word down
+                    this.scrabbleBoard[row+i][col] = word.toUpperCase().charAt(i);
+                }
+            }
+        }
     }
 
 
