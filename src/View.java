@@ -6,14 +6,12 @@
  */
 
 /**
- * This class handles all the printing of various objects
+ * This class handles all the view drawings. All methods are static
+ * Other classes send a String object (optional) and this class adds the UI before displaying
  */
 public class View {
-    //Should it only have methods that print the string objects
-    //in that case, there shouldn't be any instance vars in this class
-    //only methods that print ?
 
-    //TODO: Figure out the real purpose of this class
+
 
 
 

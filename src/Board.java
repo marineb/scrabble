@@ -12,6 +12,7 @@ import java.util.HashMap;
  */
 public class Board {
 
+    //TODO: change board representation to add W, w, L, l, -
     private char[][] scrabbleBoard;
     private static HashSet<String> dict;
     private static HashMap<String, String> boardScores;
@@ -29,14 +30,16 @@ public class Board {
     /**
      * Initialized the board
      */
+    //TODO: change display logic. Let View class handle the chars "-, W, w, L, l"
+    //TODO: the actual board only has tiles or is empty
     private void initBoard() {
         this.scrabbleBoard = new char[15][15];
         for (int i=0; i<15; i++) {
             for (int j=0; j<15; j++) {
-                this.scrabbleBoard[i][j] = '-';
+                this.scrabbleBoard[i][j] = ' ';
             }
         }
-        this.scrabbleBoard[7][7] = 'X';
+        this.scrabbleBoard[7][7] = ' ';
     }
 
     /**
@@ -128,6 +131,16 @@ public class Board {
         boardScores.put("812", "2L");
         boardScores.put("314", "2L");
         boardScores.put("1114", "2L");
+    }
+
+    /**
+     * Returns the char on the board at (row, col)
+     * @param row   row index
+     * @param col   col index
+     * @return      char at (row, col)
+     */
+    public char getTileOnBoard(int row, int col) {
+        return this.scrabbleBoard[row][col];
     }
 
     /**

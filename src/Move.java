@@ -1,9 +1,8 @@
 /**
  *
- * 1. Constructs words out of tiles -  //Maybe the player should handle this
- *      WORD REPRESENTATION ?
- * 2. Checks if word is valid using GameBoard method
- * 3. If word is valid, then ask GameBoard to place the word
+ * 1. Constructs words out of tiles
+ * 2. Checks if word is valid using Gameplay method
+ * 3. If word is valid, then ask Gameplay to place the word
  * 4. If not valid, either give it back to the player or put it back on the board
  * 5. If word is valid, return the total score to the player
  *
@@ -16,11 +15,13 @@ class Move {
     public static final int RIGHT = 1;
     public static final int DOWN  = 2;
 
+
     String word;
     int direction;
     int startRow;
     int startCol;
     boolean isValid;
+    static int totalNumberOfMoves = 0;
 
 
     /**
@@ -31,11 +32,23 @@ class Move {
      * @param startCol  starting col coordinate of the move
      */
     public Move(String word, int direction, int startRow, int startCol) {
+        //TODO: Add invalid argument checks here
+
         this.word = word;
         this.direction = direction;
         this.startRow = startRow;
         this.startCol = startCol;
         this.isValid = false;       //each moves starts off as invalid unless validated
+
+        Move.totalNumberOfMoves++;
+    }
+
+    /**
+     * Helpful for checking game state (valid + invalid)
+     * @return  # of moves
+     */
+    public static int movedPlayedSoFar() {
+        return Move.totalNumberOfMoves;
     }
 
     /**
