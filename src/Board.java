@@ -133,6 +133,14 @@ public class Board {
         boardScores.put("1114", "2L");
     }
 
+    public static String getBoardScoreForTile(String ref) {
+        if (Board.boardScores.containsKey(ref)) {
+            return Board.boardScores.get(ref);
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Returns the char on the board at (row, col)
      * @param row   row index

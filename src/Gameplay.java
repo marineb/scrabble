@@ -145,7 +145,7 @@ public class Gameplay {
         // Hiding the board for now, for testing. it's big and annoying! :)
         // System.out.println(game.toString());
         refillTray(thePlayer);
-        showTray(thePlayer);
+        View.showTray(thePlayer);
         System.out.println(thePlayer.getName() + ", enter a word (skip: *, quit: #)");
         String theWord = scanner.next();
 
@@ -186,16 +186,6 @@ public class Gameplay {
             }
         }
         player.setLetters(lettersTray);
-    }
-
-
-
-    public void showTray(Player player) {
-        System.out.print(player.getName() + ", your turn: ");
-        for (int i=0 ; i < player.getLetters().length; i++) {
-            System.out.print(player.getLetters()[i] + " ");
-        }
-        System.out.println(" ");
     }
 
     /**
@@ -240,14 +230,28 @@ public class Gameplay {
             }
         }
 
-        //see if this validation can be done down together with the board construction validation
-//        // DOES THE PLAYER HAVE ENOUGH TILES TO PLAY
-//        if (!this.doesPlayerHaveTiles(player, move, board)) {
-//            System.out.println("Not enough tiles to play move!");
-//            return false;
-//        }
+        // DOES THE FIRST MOVE CROSS THE BOARD CENTER
+        if (Move.totalNumberOfMoves == 0 && (row > 7 && col > 7)) {
+            System.out.println("First move should touch the board center!");
+            return false;
+        }
 
-        // CAN THAT WORD BE CONSTRUCTED ON THE BOARD?
+        // DOES THE SECOND (or greater) MOVE TOUCH ONE OF THE EXISTING TILES
+        if (Move.totalNumberOfMoves > 0) {
+            for (int i=0; i<word.length(); i++) {
+                if (dir == Move.RIGHT) {
+                    if (board.getTileOnBoard(row, col+i) != ' ')    {   tilesPresent = true;    }
+                } else if (dir == Move.DOWN) {
+                    if (board.getTileOnBoard(row+i, col) != ' ')    {   tilesPresent = true;    }
+                }
+            }
+            if (!tilesPresent)  {
+                System.out.println("New word has to touch an existing word");
+                return false;
+            }
+        }
+
+        // CAN THAT WORD BE CONSTRUCTED USING EXISTING PIECES AND PLAYER TILES
         for (int i=0; i<word.length(); i++) {
             if (dir == Move.RIGHT) {
                 if (board.getTileOnBoard(row, col+i) == word.charAt(i)) {
@@ -289,27 +293,6 @@ public class Gameplay {
         if (tileCopy.length == player.getLetters().length) {
             System.out.println("The word already exists! Try again!");
             return false;
-        }
-
-        // DOES THE FIRST MOVE CROSS THE BOARD CENTER
-        if (Move.totalNumberOfMoves == 0 && (row > 7 && col > 7)) {
-            System.out.println("First move should touch the board center!");
-            return false;
-        }
-
-        // DOES THE SECOND (or greater) MOVE TOUCH ONE OF THE EXISTING TILES
-        if (Move.totalNumberOfMoves > 0) {
-            for (int i=0; i<word.length(); i++) {
-                if (dir == Move.RIGHT) {
-                    if (board.getTileOnBoard(row, col+i) != ' ')    {   tilesPresent = true;    }
-                } else if (dir == Move.DOWN) {
-                    if (board.getTileOnBoard(row+i, col) != ' ')    {   tilesPresent = true;    }
-                }
-            }
-            if (!tilesPresent)  {
-                System.out.println("New word has to touch an existing word");
-                return false;
-            }
         }
 
         // ARE SECONDARY WORDS VALID IF THEY EXIST
@@ -355,7 +338,6 @@ public class Gameplay {
         String word = move.word.toUpperCase();
         int row = move.startRow;
         int col = move.startCol;
-
         int dir = move.direction;
 
         for (int i=0; i<word.length(); i++) {
@@ -400,19 +382,22 @@ public class Gameplay {
         //String word = move.word;
         C = Character.toUpperCase(C);
 
-
+        // sorry
+        // very ugly logic
+        // but it works
         if (dir == Move.DOWN) {
             while (col-j >= 0 && board.getTileOnBoard(row, col-j) != ' ') {
                 j++;
             }
-            start = col-j+1;
-            j = 1;  //reset j
+            start = col-j+1;    //determine start index of word to be formed
+            j = 1;              //reset j
 
             while (col+j <= 14 && board.getTileOnBoard(row, col+j) != ' ') {
                 j++;
             }
-            end = col+j-1;
+            end = col+j-1;      //determine end index of word
 
+            //construct new word
             for (int newCol=start; newCol<=end;  newCol++) {
                 if (newCol == col) {    newWord.append(C);                  }
                 else {  newWord.append(board.getTileOnBoard(row, newCol));  }
@@ -421,6 +406,7 @@ public class Gameplay {
             return newWord.toString().trim();
 
         } else if (dir == Move.RIGHT) {
+            //same logic as above in a different direction
             while (row-i >= 0 && board.getTileOnBoard(row-i, col) != ' ') {
                 i++;
             }
