@@ -186,6 +186,7 @@ public class Gameplay {
         player.setLetters(lettersTray);
     }
 
+
     /**
      * CAN YOU PLAY THAT MOVE ?
      * @param move  Move object played
@@ -234,12 +235,6 @@ public class Gameplay {
             return false;
         }
 
-<<<<<<< HEAD
-    public void showTray(Player player) {
-        System.out.print(player.getName() + ", your turn: ");
-        for (int i=0 ; i < player.getLetters().length; i++) {
-            System.out.print(player.getLetters()[i] + " ");
-=======
         // DOES THE SECOND (or greater) MOVE TOUCH ONE OF THE EXISTING TILES
         if (Move.totalNumberOfMoves > 0) {
             for (int i=0; i<word.length(); i++) {
@@ -292,7 +287,7 @@ public class Gameplay {
                     return false;
                 }
             }
->>>>>>> mscndle
+
         }
         //no letter was used from the tray
         if (tileCopy.length == player.getLetters().length) {
