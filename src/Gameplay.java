@@ -199,7 +199,7 @@ public class Gameplay {
         Board game = new Board();
         Scanner scanner = new Scanner(System.in);
         // Hiding the board for now, for testing. it's big and annoying! :)
-        // System.out.println(game.toString());
+        System.out.println(game.toString());
         refillTray(thePlayer);
         showTray(thePlayer);
         System.out.println(thePlayer.getName() + ", enter a word (skip: *, quit: #)");
@@ -207,7 +207,6 @@ public class Gameplay {
 
         if (theWord.equals("*")) {
             System.out.println("You decided to skip your turn.");
-            System.out.println("");
             gameOn(switchTurn());
         }
         else if (theWord.equals("#")) {
@@ -216,6 +215,7 @@ public class Gameplay {
         else {
             if (Board.validateWord(theWord) == true ) {
                 System.out.println(theWord +" is valid!");
+                // Remove letters from user's tray
                 // place word on board
                 // calculate score
                 // add score to total score
@@ -223,9 +223,7 @@ public class Gameplay {
             }
             else {
                 // if word isn't working
-                // put letters back in tray
                 System.out.println("Sorry, your word isn't valid.");
-                System.out.println("");
                 gameOn(switchTurn());
             }
         }
@@ -243,7 +241,6 @@ public class Gameplay {
         }
         player.setLetters(lettersTray);
     }
-
 
 
     public void showTray(Player player) {
