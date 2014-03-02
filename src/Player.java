@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import java.util.Scanner;
->>>>>>> 58175040576fb9a8474b88b4724dd41ba78b2117
 
 public class Player  {
 

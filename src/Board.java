@@ -138,11 +138,6 @@ public class Board {
         return dict.contains(word.toLowerCase());
     }
 
-    public static String getCellScore(int coordinate) {
-
-        return "";
-    }
-
     /**
      * Returns string representation of the Board
      * @return      Board string object
@@ -163,12 +158,25 @@ public class Board {
     }
 
 
-
-    public void placeWordOnBoard(char[] word, int row, char col, int direction) {
+    // will not place the word on the board unless it's valid
+    void placeWordOnBoard(Move move) {
         //assumption is that the word is valid
+        if (move.isValid) {
+            String word = move.word;
+            int row = move.startRow;
+            int col = move.startCol;
 
-
-
+            for (int i=0; i<word.length(); i++) {
+                if (move.direction == Move.RIGHT) {
+                    //increase row val to add word to the right
+                    System.out.println("adding word to right");
+                    this.scrabbleBoard[row][col+i] = word.toUpperCase().charAt(i);
+                } else if (move.direction == Move.DOWN) {
+                    //increase col val to add word down
+                    this.scrabbleBoard[row+i][col] = word.toUpperCase().charAt(i);
+                }
+            }
+        }
     }
 
 

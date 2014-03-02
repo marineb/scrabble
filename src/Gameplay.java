@@ -17,13 +17,11 @@ import java.util.Scanner;
 public class Gameplay {
 
     private HashMap<Character, Integer> tileBag;    //unchecked warning without types
-    private HashMap<Character, Integer> tileScore;
     private Player[] players = new Player[2];
     private int turn;
 
     public Gameplay() {
         this.initTileBag();
-        this.initTileScore();
     }
 
 
@@ -31,7 +29,6 @@ public class Gameplay {
      * Tile bag initialization and distribution
      * //TODO: Find a way to read these values directly from the file
      */
-    //@SuppressWarnings("unchecked")        //not sure if suppressing warnings is good practice
     private void initTileBag() {
         this.tileBag =  new HashMap<Character, Integer>();
         if (this.tileBag.isEmpty()) {
@@ -66,52 +63,6 @@ public class Gameplay {
 
 
 
-    /**
-     * Initializes tile scores in another hashmap
-     * //TODO: Find a way to read these directly from the file
-     */
-    public void initTileScore() {
-        this.tileScore = new HashMap<Character, Integer>();
-        if (this.tileScore.isEmpty()) {
-            this.tileScore.put('A', 1);
-            this.tileScore.put('B', 3);
-            this.tileScore.put('C', 3);
-            this.tileScore.put('D', 2);
-            this.tileScore.put('E', 1);
-            this.tileScore.put('F', 2);
-            this.tileScore.put('G', 2);
-            this.tileScore.put('H', 4);
-            this.tileScore.put('I', 1);
-            this.tileScore.put('J', 8);
-            this.tileScore.put('K', 5);
-            this.tileScore.put('L', 1);
-            this.tileScore.put('M', 3);
-            this.tileScore.put('N', 1);
-            this.tileScore.put('O', 1);
-            this.tileScore.put('P', 3);
-            this.tileScore.put('Q', 10);
-            this.tileScore.put('R', 1);
-            this.tileScore.put('S', 1);
-            this.tileScore.put('T', 1);
-            this.tileScore.put('U', 1);
-            this.tileScore.put('V', 4);
-            this.tileScore.put('W', 4);
-            this.tileScore.put('X', 8);
-            this.tileScore.put('Y', 4);
-            this.tileScore.put('Z', 10);
-        }
-    }
-
-    /**
-     * @param C     Tile to be scored
-     * @return      Score for a tile
-     */
-    private int getTileScore(Character C) {
-        if (this.tileScore.containsKey(C)) {
-            return this.tileScore.get(C);
-        }
-        return -1;
-    }
 
     /**
      * Used when game starts and after each move

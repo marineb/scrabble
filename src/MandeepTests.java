@@ -11,11 +11,22 @@ public class MandeepTests {
 
     public static void main(String[] args) {
 
-        Board gameTest = new Board();
+        Board gameBoard = new Board();
 
-        System.out.println(gameTest.toString());
+        System.out.println(gameBoard.toString());
+
+        Move move1 = new Move("start", Move.RIGHT, 7, 7);
+        move1.isValid = true;
+        gameBoard.placeWordOnBoard(move1);
+
+        System.out.println(gameBoard.toString());
 
 
+        Move move2 = new Move("termite", Move.DOWN, 7, 11);
+        move2.isValid = true;
+        gameBoard.placeWordOnBoard(move2);
+
+        System.out.println(gameBoard.toString());
 
 
 

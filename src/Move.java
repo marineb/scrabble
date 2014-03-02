@@ -11,7 +11,7 @@
  *
  */
 
-public class Move {
+class Move {
 
     public static final int RIGHT = 1;
     public static final int DOWN  = 2;
@@ -35,6 +35,7 @@ public class Move {
         this.direction = direction;
         this.startRow = startRow;
         this.startCol = startCol;
+        this.isValid = false;       //each moves starts off as invalid unless validated
     }
 
     /**
