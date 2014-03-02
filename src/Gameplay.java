@@ -202,39 +202,44 @@ public class Gameplay {
     }
 
     /**
-     * truth personified / holy grail / jesus / bees knees / cat's pajamas
+     * CAN YOU PLAY THAT MOVE ?
      * @param move  Move object played
      * @return      boolean
      */
-    public boolean isMoveValid(Move move, Board board) {
+    public boolean isMoveValid(Player player, Move move, Board board) {
         String word = move.word;
         int row = move.startRow;
         int col = move.startCol;
         int dir = move.direction;
+        //char[] tileCopy = player.getLetters();
         boolean tilesPresent = false;
 
-        //Does word overflow board?
-        //Checking both row, col overflow in one step
+        // DOES THE BOARD OVERFLOW
         if ((dir == Move.RIGHT && (col + word.length() > 14)) ||
                 (dir == Move.DOWN && (row + word.length() > 14))) {
             System.out.println("Board overflow. Invalid move!");
             return false;
         }
 
-        //is word valid using dictionary?
+        // IS THE WORD VALID USING A DICT
         if (!Board.validateWord(word)) {
             System.out.println("Word doesn't exist in the Dictionary");
             return false;
         }
 
-        //If it's the first move of the game does the word cross the center X?
+        // DOES THE PLAYER HAVE ENOUGH TILES TO PLAY
+        if (!this.doesPlayerHaveTiles(player, move, board)) {
+            System.out.println("Not enough tiles to play move!");
+            return false;
+        }
+
+        // DOES THE FIRST MOVE CROSS THE BOARD CENTER
         if (Move.totalNumberOfMoves == 0 && (row > 7 && col > 7)) {
             System.out.println("First move should touch the board center!");
             return false;
         }
 
-        //If it's the 2nd or greater move in the game, does it touch at least another letter
-        //navigate the game board to see if there is any char between row,col -> word.length()
+        // DOES THE SECOND (or greater) MOVE TOUCH ONE OF THE EXISTING TILES
         if (Move.totalNumberOfMoves > 0) {
             for (int i=0; i<word.length(); i++) {
                 if (dir == Move.RIGHT) {
@@ -249,22 +254,42 @@ public class Gameplay {
             }
         }
 
-        //verify if the intended word does not have tiles before 1st and after the last tile
-        //the current word being played has to be the largest contiguous string on the board
-        //at that position
+        // CAN THAT WORD BE CONSTRUCTED ON THE BOARD?
+        //TODO: what if you want to play "Road" - R, is present but there is a "F" instead of "D"
 
 
 
-        //verify if all secondary words formed make sense or not
+        // INTENDED WORD SHOULD BE THE LARGEST CONTIGUOUS STRING IN THAT DIRECTION
+        if (dir == Move.RIGHT) {
+            if (board.getTileOnBoard(row, col+word.length()+1) != ' ' ||
+                    board.getTileOnBoard(row, col-1) != ' ') {
+                System.out.println("Incomplete input word (find better message)");
+                return false;
+            }
+        } else if (dir == Move.DOWN) {
+            if (board.getTileOnBoard(row+word.length()+1, col) != ' ' ||
+                    board.getTileOnBoard(row-1, col) != ' ') {
+                System.out.println("Incomplete input word (downwards)");
+                return false;
+            }
+        }
+
+        // ARE SECONDARY WORDS VALID IF THEY EXIST
         ArrayList<String> secList = this.getSecondaryWords(move, board);
         if (!this.validateSecondaryWords(secList)) {
             System.out.println("Invalid secondary words created");
             return false;
         }
 
-        //If you've reached here, life is good
+        // IF YOU HAVE REACHED HERE, LIFE IS GOOD
         move.isValid = true;
         return true;
+    }
+
+    private boolean doesPlayerHaveTiles(Player player, Move move, Board board) {
+
+
+        return false;
     }
 
     /**
@@ -273,9 +298,14 @@ public class Gameplay {
      * @return      boolean
      */
     private boolean validateSecondaryWords(ArrayList<String> list) {
+        for (String str: list) {
+            if (!Board.validateWord(str)) {
+                System.out.println(str + " not valid secondary word.");
+                return false;
+            }
+        }
 
-
-        return false;
+        return true;
     }
 
     /**

@@ -60,8 +60,8 @@ public class Scores {
      * @return      Score for a tile
      */
     private int getTileScore(Character C) {
-        if (this.tileScore.containsKey(C)) {
-            return this.tileScore.get(C);
+        if (Scores.tileScore.containsKey(C)) {
+            return Scores.tileScore.get(C);
         }
         return -1;
     }

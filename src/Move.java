@@ -10,18 +10,21 @@
  *
  */
 
+import java.util.ArrayList;
+
 class Move {
 
     public static final int RIGHT = 1;
     public static final int DOWN  = 2;
 
+    static int totalNumberOfMoves = 0;
 
     String word;
     int direction;
     int startRow;
     int startCol;
     boolean isValid;
-    static int totalNumberOfMoves = 0;
+    ArrayList<String> secondaryWords;
 
 
     /**
@@ -44,6 +47,21 @@ class Move {
     }
 
     /**
+     * Utility method that converts Strings to char arrays
+     * Useful for using characters for move validation
+     * @param str   Input string word
+     * @return      Char array of str
+     */
+    public static char[] convertStringToCharsArray(String str) {
+        char[] charArr = new char[str.length()];
+        for (int i=0; i<str.length(); i++) {
+            charArr[i] = str.charAt(i);
+        }
+
+        return charArr;
+    }
+
+    /**
      * Helpful for checking game state (valid + invalid)
      * @return  # of moves
      */
@@ -58,17 +76,6 @@ class Move {
 
         return -1;
     }
-
-    /**
-     * Implements an algorithm to compute if the move is correct
-     * @param word  player's input
-     * @return      T/F if move is valid
-     */
-    //TODO: Not sure if we need this since we have this method in Board class
-    public boolean isWordValid(String word) {
-        return Board.validateWord(word);
-    }
-
 
     public boolean registerMove() {
         return false;

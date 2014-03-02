@@ -54,7 +54,7 @@ public class Board {
 
             //add all words from words.txt to hashSet
             while (line != null) {
-                dict.add(line);
+                dict.add(line.toLowerCase());
                 line = dictReader.readLine();
             }
         } catch (IOException e) {
