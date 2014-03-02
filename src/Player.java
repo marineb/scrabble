@@ -56,4 +56,14 @@ public class Player  {
     public void setPlayers(Player[] players) {
         this.players = players;
     }
+
+    /**
+     * Used to edit the player's tray after each move
+     * @param C
+     */
+    //TODO: do we need this ?
+    public void removeTileFromTray(char C) {
+
+
+    }
 }

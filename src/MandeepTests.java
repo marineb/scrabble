@@ -58,6 +58,7 @@ public class MandeepTests {
 //        System.out.println("word: " + listTest.remove(0));
 
 
+        System.out.println("total moves: " + Move.totalNumberOfMoves);
 
 
 

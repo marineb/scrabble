@@ -5,10 +5,7 @@
  * Created by mscndle on 2/24/14.
  */
 
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * This class handles move validation and score handling
@@ -211,7 +208,8 @@ public class Gameplay {
         int row = move.startRow;
         int col = move.startCol;
         int dir = move.direction;
-        //char[] tileCopy = player.getLetters();
+        String[] tileCopy = player.getLetters();
+        Arrays.sort(tileCopy);
         boolean tilesPresent = false;
 
         // DOES THE BOARD OVERFLOW
@@ -227,9 +225,69 @@ public class Gameplay {
             return false;
         }
 
-        // DOES THE PLAYER HAVE ENOUGH TILES TO PLAY
-        if (!this.doesPlayerHaveTiles(player, move, board)) {
-            System.out.println("Not enough tiles to play move!");
+        // INTENDED WORD SHOULD BE THE LARGEST CONTIGUOUS STRING IN THAT DIRECTION
+        if (dir == Move.RIGHT) {
+            if (board.getTileOnBoard(row, col+word.length()+1) != ' ' ||
+                    board.getTileOnBoard(row, col-1) != ' ') {
+                System.out.println("Incomplete input word (find better message)");
+                return false;
+            }
+        } else if (dir == Move.DOWN) {
+            if (board.getTileOnBoard(row+word.length()+1, col) != ' ' ||
+                    board.getTileOnBoard(row-1, col) != ' ') {
+                System.out.println("Incomplete input word (downwards)");
+                return false;
+            }
+        }
+
+        //see if this validation can be done down together with the board construction validation
+//        // DOES THE PLAYER HAVE ENOUGH TILES TO PLAY
+//        if (!this.doesPlayerHaveTiles(player, move, board)) {
+//            System.out.println("Not enough tiles to play move!");
+//            return false;
+//        }
+
+        // CAN THAT WORD BE CONSTRUCTED ON THE BOARD?
+        for (int i=0; i<word.length(); i++) {
+            if (dir == Move.RIGHT) {
+                if (board.getTileOnBoard(row, col+i) == word.charAt(i)) {
+                    //don't do anything, this is expected (unless it happens for all letters)
+                } else if (board.getTileOnBoard(row, col+i) == ' ') {
+                    //empty cell - user should have it
+                    int pos = Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i)));
+                    if (pos >= 0) {
+                        tileCopy[pos] = null;
+                    } else {
+                        System.out.println("Player does not have char: " + word.charAt(i));
+                        return false;
+                    }
+                } else {
+                    //neither empty cell nor expected char -- stepping over someone else's space
+                    System.out.println("Unknown char! unable to insert " + word.charAt(i));
+                    return false;
+                }
+            } else if (dir == Move.DOWN) {
+                if (board.getTileOnBoard(row+i, col) == word.charAt(i)) {
+                    //expected for at most all-1 cases
+                } else if (board.getTileOnBoard(row+i, col) == ' ') {
+                    //empty cell - find tile with player
+                    int pos = Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i)));
+                    if (pos >= 0) {
+                        tileCopy[pos] = null;
+                    } else {
+                        System.out.println("Player does not have char: " + word.charAt(i));
+                        return false;
+                    }
+                } else {
+                    //neither empty cell nor expected char -- stepping over someone else's space
+                    System.out.println("Unknown char! unable to insert " + word.charAt(i));
+                    return false;
+                }
+            }
+        }
+        //no letter was used from the tray
+        if (tileCopy.length == player.getLetters().length) {
+            System.out.println("The word already exists! Try again!");
             return false;
         }
 
@@ -254,26 +312,6 @@ public class Gameplay {
             }
         }
 
-        // CAN THAT WORD BE CONSTRUCTED ON THE BOARD?
-        //TODO: what if you want to play "Road" - R, is present but there is a "F" instead of "D"
-
-
-
-        // INTENDED WORD SHOULD BE THE LARGEST CONTIGUOUS STRING IN THAT DIRECTION
-        if (dir == Move.RIGHT) {
-            if (board.getTileOnBoard(row, col+word.length()+1) != ' ' ||
-                    board.getTileOnBoard(row, col-1) != ' ') {
-                System.out.println("Incomplete input word (find better message)");
-                return false;
-            }
-        } else if (dir == Move.DOWN) {
-            if (board.getTileOnBoard(row+word.length()+1, col) != ' ' ||
-                    board.getTileOnBoard(row-1, col) != ' ') {
-                System.out.println("Incomplete input word (downwards)");
-                return false;
-            }
-        }
-
         // ARE SECONDARY WORDS VALID IF THEY EXIST
         ArrayList<String> secList = this.getSecondaryWords(move, board);
         if (!this.validateSecondaryWords(secList)) {
@@ -282,14 +320,11 @@ public class Gameplay {
         }
 
         // IF YOU HAVE REACHED HERE, LIFE IS GOOD
+        // 1.   SET THE MOOD TO VALID
+        // 2.   SECONDARY WORDS CREATED SHOULD BE PASSED ONTO THE MOVE OBJECT
         move.isValid = true;
+        move.secondaryWords = secList;
         return true;
-    }
-
-    private boolean doesPlayerHaveTiles(Player player, Move move, Board board) {
-
-
-        return false;
     }
 
     /**
