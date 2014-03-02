@@ -45,7 +45,7 @@ public class Board {
      */
     private void initDict() throws FileNotFoundException {
         Board.dict = new HashSet<String>();
-        BufferedReader dictReader = new BufferedReader(new FileReader("words.txt"));
+        BufferedReader dictReader = new BufferedReader(new FileReader("../words.txt"));
         try {
             String line = dictReader.readLine();
 
