@@ -30,13 +30,32 @@ public class MandeepTests {
 
         System.out.println(gameBoard.toString());
 
-        Move move3 = new Move("rage", Move.RIGHT, 8, 8);
-        ArrayList<String> listTest = game.getSecondaryWords(move3, gameBoard);
 
-        System.out.println("new words: " + listTest.size());
-        System.out.println("word: " + listTest.remove(0));
-        System.out.println("word: " + listTest.remove(0));
-        System.out.println("word: " + listTest.remove(0));
+        Move move3 = new Move("tar", Move.RIGHT, 9, 9);
+        move3.isValid = true;
+        gameBoard.placeWordOnBoard(move3);
+        System.out.println(gameBoard.toString());
+
+        Move move4 = new Move("road", Move.DOWN, 7, 10);
+        ArrayList<String> move4Test = game.getSecondaryWords(move4, gameBoard);
+        System.out.println("new word: " + move4Test.size());
+
+        System.out.println("word: " + move4Test.remove(0));
+        System.out.println("word: " + move4Test.remove(0));
+
+
+//        move4.isValid = true;
+//        gameBoard.placeWordOnBoard(move4);
+//        System.out.println(gameBoard.toString());
+
+
+//        Move move5 = new Move("rage", Move.RIGHT, 8, 8);
+//        ArrayList<String> listTest = game.getSecondaryWords(move5, gameBoard);
+//
+//        System.out.println("new words: " + listTest.size());
+//        System.out.println("word: " + listTest.remove(0));
+//        System.out.println("word: " + listTest.remove(0));
+//        System.out.println("word: " + listTest.remove(0));
 
 
 

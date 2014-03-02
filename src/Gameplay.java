@@ -5,8 +5,6 @@
  * Created by mscndle on 2/24/14.
  */
 
-
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
@@ -25,7 +23,6 @@ public class Gameplay {
     public Gameplay() {
         this.initTileBag();
     }
-
 
     /**
      * Tile bag initialization and distribution
@@ -260,8 +257,8 @@ public class Gameplay {
 
         //verify if all secondary words formed make sense or not
         ArrayList<String> secList = this.getSecondaryWords(move, board);
-        if (!this.validateSecondayWords(secList)) {
-            System.out.println("Invalid move");
+        if (!this.validateSecondaryWords(secList)) {
+            System.out.println("Invalid secondary words created");
             return false;
         }
 
@@ -275,7 +272,7 @@ public class Gameplay {
      * @param list  input list of secondary words
      * @return      boolean
      */
-    private boolean validateSecondayWords(ArrayList<String> list) {
+    private boolean validateSecondaryWords(ArrayList<String> list) {
 
 
         return false;
@@ -332,72 +329,53 @@ public class Gameplay {
         StringBuilder newWord = new StringBuilder();
         int start;
         int end;
-        int i = 0;
-        int j = 0;
+        int i = 1;
+        int j = 1;
         int dir = move.direction;
-        String word = move.word;
+        //String word = move.word;
         C = Character.toUpperCase(C);
 
 
         if (dir == Move.DOWN) {
-            System.out.println("dir down");
-            while (col-j >= 0) {
-                if (board.getTileOnBoard(row, col-j) != ' ') {
-                    j++;
-                } else break;
+            while (col-j >= 0 && board.getTileOnBoard(row, col-j) != ' ') {
+                j++;
             }
-            start = col-j;
-            System.out.println("start: " + start);
+            start = col-j+1;
             j = 1;  //reset j
 
-            while (col+j <= 14) {
-                if (board.getTileOnBoard(row, col+j) != ' ') {
-                    j++;
-                } else break;
+            while (col+j <= 14 && board.getTileOnBoard(row, col+j) != ' ') {
+                j++;
             }
-            end = col+j;
-            System.out.println("end: " + end);
+            end = col+j-1;
 
             for (int newCol=start; newCol<=end;  newCol++) {
-
-                //if (var == offset)  {   newWord.append(word.charAt(var));   }
-                newWord.append(board.getTileOnBoard(row, newCol));
+                if (newCol == col) {    newWord.append(C);                  }
+                else {  newWord.append(board.getTileOnBoard(row, newCol));  }
             }
 
             return newWord.toString().trim();
 
         } else if (dir == Move.RIGHT) {
-
-            System.out.println("row,col: " + row + " " + col);
-            System.out.println("char: " + C);
-
-            while (row-i >= 0) {
-                //System.out.println("tile at " + (row-i) + " " + col + board.getTileOnBoard(row-i,
-                        //col));
-                if (board.getTileOnBoard(row-i, col) != ' ') {
-                    i++;
-                } else break;
+            while (row-i >= 0 && board.getTileOnBoard(row-i, col) != ' ') {
+                i++;
             }
-            start = row-i;
-            System.out.println("start: "  +start);
+            start = row-i+1;
             i = 1;
-//
-//            while (row+i <= 14) {
-//                if (board.getTileOnBoard(row+i, col) != ' ') {
-//                    i++;
-//                } else break;
-//            }
-//            end = row+i;
-//            System.out.println("end: " + end);
-//
-//            //int var = 0;
-//            for (int newRow = start; newRow <= end; newRow++) {
-//                newWord.append(board.getTileOnBoard(newRow, col));
-//            }
+
+            while (row+i <= 14 && board.getTileOnBoard(row+i, col) != ' ') {
+                i++;
+            }
+            end = row+i-1;
+
+            for (int newRow = start; newRow <= end; newRow++) {
+                if (newRow == row) {    newWord.append(C);                  }
+                else {  newWord.append(board.getTileOnBoard(newRow, col));  }
+            }
 
             return newWord.toString().trim();
         }
 
+        //Ideally it should never this side of the function
         System.out.println("constructing null");
         return null;
     }
