@@ -170,7 +170,7 @@ public class Gameplay {
             // isMoveValid(thePlayer, theMove, game);   Move validation not working. I am making all words valid for now. See below.
             theMove.isValid = true;
             game.placeWordOnBoard(theMove);
-            // REMOVE LETTERS FROM TRAY
+            // NEED TO REMOVE LETTERS FROM TRAY
             View.printBoard(game);
             gameOn(switchTurn());
 
