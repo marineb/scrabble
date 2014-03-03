@@ -12,8 +12,6 @@
 public class View {
 
 
-
-
     public static void showTray(Player player) {
         System.out.print(player.getName() + ", your turn: ");
         for (int i=0 ; i < player.getLetters().length; i++) {
