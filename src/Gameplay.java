@@ -167,7 +167,8 @@ public class Gameplay {
             System.out.println("Start row: ");
             int theRow = scanner.nextInt();
             Move theMove = new Move(theWord, theDirection, theRow, theCol);        // col and rows are reversed.
-            //isMoveValid(thePlayer, theMove, game);   THIS IS NOT WORKING
+
+            // isMoveValid(thePlayer, theMove, game);
             theMove.isValid = true;
             game.placeWordOnBoard(theMove);
             // REMOVE LETTERS FROM TRAY
