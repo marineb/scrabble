@@ -278,7 +278,6 @@ public class Gameplay {
                     //don't do anything, this is expected (unless it happens for all letters)
                 } else if (board.getTileOnBoard(row, col+i) == ' ') {
                     //empty cell - user should have it
-                    System.out.println(Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i))));
                     int pos = Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i)));
                     if (pos >= 0) {
                         tileCopy[pos] = null;
