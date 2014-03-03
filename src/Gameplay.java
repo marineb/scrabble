@@ -157,6 +157,18 @@ public class Gameplay {
             endGame();
         }
         else {
+
+            System.out.println("Now a direction (right: 1 or down: 2):");
+            int theDirection = scanner.nextInt();
+            System.out.println("Start column: ");
+            int theCol = scanner.nextInt();
+            System.out.println("Start row: ");
+            int theRow = scanner.nextInt();
+            Move theMove = new Move(theWord, theDirection, theCol, theRow);
+
+            isMoveValid(thePlayer, theMove, game);
+
+            /*
             if (Board.validateWord(theWord)) {
                 System.out.println(theWord +" is valid!");
                 // Remove letters from user's tray
@@ -170,6 +182,7 @@ public class Gameplay {
                 System.out.println("Sorry, your word isn't valid.");
                 gameOn(switchTurn());
             }
+            */
         }
 
     }
