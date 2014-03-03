@@ -39,7 +39,6 @@ public class Board {
                 this.scrabbleBoard[i][j] = ' ';
             }
         }
-        this.scrabbleBoard[7][7] = ' ';
     }
 
     /**
@@ -48,7 +47,7 @@ public class Board {
      */
     private void initDict() throws FileNotFoundException {
         Board.dict = new HashSet<String>();
-        BufferedReader dictReader = new BufferedReader(new FileReader("../words.txt"));
+        BufferedReader dictReader = new BufferedReader(new FileReader("words.txt"));
         try {
             String line = dictReader.readLine();
 
@@ -73,6 +72,11 @@ public class Board {
         boardScores.put("70", "3W");
         boardScores.put("07", "3W");
         boardScores.put("014", "3W");
+        boardScores.put("140", "3W");
+        boardScores.put("147", "3W");
+        boardScores.put("714", "3W");
+        boardScores.put("1414", "3W");
+
 
         //DOUBLE WORD
         boardScores.put("11", "2W");
@@ -163,23 +167,28 @@ public class Board {
      * Returns string representation of the Board
      * @return      Board string object
      */
-    public String toString() {
-        StringBuilder board = new StringBuilder();
-        board.append("   A   B   C   D   E   F   G   H   I   J   K   L   M   N   O\n");
+
+
+    /**
+     * @return  The scrabble board for use by the View class
+     */
+    public char[][] getScrabbleBoardClone() {
+        char[][] boardClone = new char[15][15];
+
         for (int i=0; i<15; i++) {
-            if (i >= 10) {  board.append(i + " ");          }
-            else         {  board.append(" " + i + " ");    }
             for (int j=0; j<15; j++) {
-                board.append(this.scrabbleBoard[i][j] + "   ");
+                boardClone[i][j] = this.scrabbleBoard[i][j];
             }
-            board.append("\n\n");
         }
 
-        return board.toString();
+        return boardClone;
     }
 
 
-    // will not place the word on the board unless it's valid
+    /**
+     * Adds the new word on the board
+     * @param move
+     */
     void placeWordOnBoard(Move move) {
         //assumption is that the word is valid
         if (move.isValid) {
@@ -199,43 +208,6 @@ public class Board {
             }
         }
     }
-
-
-//    /**
-//     * Helper method to find if the word overflows the board
-//     * @param word  player's move
-//     * @param row   intended row# on the board
-//     * @param col   intended col# on the board
-//     * @param dir   RIGHT or DOWN
-//     * @return      True or False depending on if the word
-//     */
-//    private boolean doesWordOverflowBoard(char[] word, int row, char col, int dir) {
-//        if (dir == RIGHT) {
-//            if (col + word.length > 'O'){   return false;   }   //TODO: check if + works on chars
-//            else                        {   return true;    }
-//        } else if (dir == DOWN) {
-//            if (row + word.length > 14) {   return false;   }
-//            else                        {   return true;    }
-//        }
-//        return false;
-//    }
-//
-//    /**
-//     *
-//     * @param word
-//     * @param row
-//     * @param col
-//     * @param dir
-//     * @return
-//     */
-//    private boolean validateArguments(char[] word, int row, char col, int dir) {
-//        if (dir != RIGHT && dir != DOWN){   throw new IllegalArgumentException();   }
-//        if (row < 0 || row > 14)                    {   throw new IllegalArgumentException();   }
-//        if (col < 'A' || col > 'O')                 {   throw new IllegalArgumentException();   }
-//        if (word.length > 7)                        {   throw new IllegalArgumentException();   }
-//
-//        return true;
-//    }
 
 
 }
