@@ -167,8 +167,7 @@ public class Gameplay {
             System.out.println("Start row: ");
             int theRow = scanner.nextInt();
             Move theMove = new Move(theWord, theDirection, theRow, theCol);        // col and rows are reversed.
-
-            // isMoveValid(thePlayer, theMove, game);
+            // isMoveValid(thePlayer, theMove, game);   Move validation not working. I am making all words valid for now. See below.
             theMove.isValid = true;
             game.placeWordOnBoard(theMove);
             // REMOVE LETTERS FROM TRAY
