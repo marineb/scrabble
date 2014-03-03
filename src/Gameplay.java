@@ -142,8 +142,10 @@ public class Gameplay {
 
         Board game = new Board();
         Scanner scanner = new Scanner(System.in);
-        // Hiding the board for now, for testing. it's big and annoying! :)
-        System.out.println(game.toString());
+        if (Move.totalNumberOfMoves == 0) {
+            System.out.println(game.toString());
+            View.printBoard(game);
+        }
         refillTray(thePlayer);
         View.showTray(thePlayer);
         System.out.println(thePlayer.getName() + ", enter a word (skip: *, quit: #)");
@@ -164,9 +166,12 @@ public class Gameplay {
             int theCol = scanner.nextInt();
             System.out.println("Start row: ");
             int theRow = scanner.nextInt();
-            Move theMove = new Move(theWord, theDirection, theCol, theRow);
-
-            isMoveValid(thePlayer, theMove, game);
+            Move theMove = new Move(theWord, theDirection, theRow, theCol);        // col and rows are reversed.
+            //isMoveValid(thePlayer, theMove, game);   THIS IS NOT WORKING
+            theMove.isValid = true;
+            game.placeWordOnBoard(theMove);
+            // REMOVE LETTERS FROM TRAY
+            View.printBoard(game);
             gameOn(switchTurn());
 
             /*
@@ -215,8 +220,6 @@ public class Gameplay {
         Arrays.sort(tileCopy);
         boolean tilesPresent = false;
 
-        System.out.println(player.getName());
-        System.out.println("what are the player's letter? "+player.getLetters()[0]);
 
         // DOES THE BOARD OVERFLOW
         if ((dir == Move.RIGHT && (col + word.length() > 14)) ||
@@ -262,7 +265,7 @@ public class Gameplay {
                 }
             }
             if (!tilesPresent)  {
-                System.out.println("New word has to touch an existing word-HAHA");
+                System.out.println("New word has to touch an existing word");
                 return false;
             }
         }
@@ -275,7 +278,7 @@ public class Gameplay {
                     //don't do anything, this is expected (unless it happens for all letters)
                 } else if (board.getTileOnBoard(row, col+i) == ' ') {
                     //empty cell - user should have it
-                    System.out.println("HELLO--"+Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i))));
+                    System.out.println(Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i))));
                     int pos = Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i)));
                     if (pos >= 0) {
                         tileCopy[pos] = null;
