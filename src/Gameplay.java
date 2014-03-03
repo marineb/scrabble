@@ -167,6 +167,7 @@ public class Gameplay {
             Move theMove = new Move(theWord, theDirection, theCol, theRow);
 
             isMoveValid(thePlayer, theMove, game);
+            gameOn(switchTurn());
 
             /*
             if (Board.validateWord(theWord)) {
@@ -214,6 +215,9 @@ public class Gameplay {
         Arrays.sort(tileCopy);
         boolean tilesPresent = false;
 
+        System.out.println(player.getName());
+        System.out.println("what are the player's letter? "+player.getLetters()[0]);
+
         // DOES THE BOARD OVERFLOW
         if ((dir == Move.RIGHT && (col + word.length() > 14)) ||
                 (dir == Move.DOWN && (row + word.length() > 14))) {
@@ -223,7 +227,7 @@ public class Gameplay {
 
         // IS THE WORD VALID USING A DICT
         if (!Board.validateWord(word)) {
-            System.out.println("Word doesn't exist in the Dictionary");
+            System.out.println("This word doesn't exist. Can't fool us!");
             return false;
         }
 
@@ -243,13 +247,13 @@ public class Gameplay {
         }
 
         // DOES THE FIRST MOVE CROSS THE BOARD CENTER
-        if (Move.totalNumberOfMoves == 0 && (row > 7 && col > 7)) {
+        if (Move.totalNumberOfMoves == 1 && (row > 7 && col > 7)) {
             System.out.println("First move should touch the board center!");
             return false;
         }
 
         // DOES THE SECOND (or greater) MOVE TOUCH ONE OF THE EXISTING TILES
-        if (Move.totalNumberOfMoves > 0) {
+        if (Move.totalNumberOfMoves > 1) {
             for (int i=0; i<word.length(); i++) {
                 if (dir == Move.RIGHT) {
                     if (board.getTileOnBoard(row, col+i) != ' ')    {   tilesPresent = true;    }
@@ -258,10 +262,11 @@ public class Gameplay {
                 }
             }
             if (!tilesPresent)  {
-                System.out.println("New word has to touch an existing word");
+                System.out.println("New word has to touch an existing word-HAHA");
                 return false;
             }
         }
+
 
         // CAN THAT WORD BE CONSTRUCTED USING EXISTING PIECES AND PLAYER TILES
         for (int i=0; i<word.length(); i++) {
@@ -270,16 +275,17 @@ public class Gameplay {
                     //don't do anything, this is expected (unless it happens for all letters)
                 } else if (board.getTileOnBoard(row, col+i) == ' ') {
                     //empty cell - user should have it
+                    System.out.println("HELLO--"+Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i))));
                     int pos = Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i)));
                     if (pos >= 0) {
                         tileCopy[pos] = null;
                     } else {
-                        System.out.println("Player does not have char: " + word.charAt(i));
+                        System.out.println("You are missing the letter '"+ word.charAt(i)+"'.");
                         return false;
                     }
                 } else {
                     //neither empty cell nor expected char -- stepping over someone else's space
-                    System.out.println("Unknown char! unable to insert " + word.charAt(i));
+                    System.out.println("What is this character?? We're unable to insert '" + word.charAt(i)+"'.");
                     return false;
                 }
             } else if (dir == Move.DOWN) {
@@ -291,12 +297,12 @@ public class Gameplay {
                     if (pos >= 0) {
                         tileCopy[pos] = null;
                     } else {
-                        System.out.println("Player does not have char: " + word.charAt(i));
+                        System.out.println("You are missing the letter '" + word.charAt(i)+"'.");
                         return false;
                     }
                 } else {
                     //neither empty cell nor expected char -- stepping over someone else's space
-                    System.out.println("Unknown char! unable to insert " + word.charAt(i));
+                    System.out.println("What is this character?? We're unable to insert '" + word.charAt(i)+"'.");
                     return false;
                 }
             }
@@ -304,14 +310,14 @@ public class Gameplay {
         }
         //no letter was used from the tray
         if (tileCopy.length == player.getLetters().length) {
-            System.out.println("The word already exists! Try again!");
+            System.out.println("The word already exists. Try again!");
             return false;
         }
 
         // ARE SECONDARY WORDS VALID IF THEY EXIST
         ArrayList<String> secList = this.getSecondaryWords(move, board);
         if (!this.validateSecondaryWords(secList)) {
-            System.out.println("Invalid secondary words created");
+            System.out.println("The other words you tried to create are invalid. Sorry!");
             return false;
         }
 
