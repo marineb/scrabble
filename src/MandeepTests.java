@@ -21,14 +21,14 @@ public class MandeepTests {
         move1.isValid = true;
         gameBoard.placeWordOnBoard(move1);
 
-        System.out.println(gameBoard.toString());
+        View.printBoard(gameBoard);
 
 
         Move move2 = new Move("termite", Move.DOWN, 7, 11);
         move2.isValid = true;
         gameBoard.placeWordOnBoard(move2);
-
-        System.out.println(gameBoard.toString());
+        View.printBoard(gameBoard);
+        //System.out.println(gameBoard.toString());
 
 
         Move move3 = new Move("tar", Move.RIGHT, 9, 9);
