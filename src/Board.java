@@ -160,6 +160,7 @@ public class Board {
      * @return      boolean if word is valid
      */
     public static boolean validateWord(String word) {
+        //System.out.println("Dict is validating: " + word);
         return dict.contains(word.toLowerCase());
     }
 
@@ -189,7 +190,7 @@ public class Board {
      * Adds the new word on the board
      * @param move
      */
-    void placeWordOnBoard(Move move) {
+    public void placeWordOnBoard(Move move) {
         //assumption is that the word is valid
         if (move.isValid) {
             String word = move.word;

@@ -16,6 +16,7 @@ public class Gameplay {
     private HashMap<Character, Integer> tileBag;    //unchecked warning without types
     private Player[] players = new Player[2];
     private int turn;
+    Scores scores;
 
     public Gameplay() {
         this.initTileBag();
@@ -58,6 +59,8 @@ public class Gameplay {
     }
 
     /**
+     * / *****  USE THE getRandomLetterFromBag(char C) instead of this    *****  /
+     *
      * Used when game starts and after each move
      * @param C     Tile to be removed
      * @return      removed successfully
@@ -76,13 +79,23 @@ public class Gameplay {
      * @param C     Tile added back to bag
      * @return      added successfully
      */
-    public boolean addTileToBag(char C) {
+    public void addTileToBag(char C) {
         if (this.tileBag.containsKey(C)) {
             int newValue = this.tileBag.get(C) + 1;
             this.tileBag.put(C, newValue);
-            return true;
         }
-        return false;
+    }
+
+    public int totalNumberOfTilesInBag() {
+        int total = 0;
+
+        for (int i=65; i<=90; i++) {
+            char C = (char) i;
+            total += tileBag.get(C);
+        }
+
+        return total;
+
     }
 
 
@@ -114,6 +127,8 @@ public class Gameplay {
             players[i] = new Player(scanner.next(), i, new String[7]);
 
         }
+
+        this.scores = new Scores(players[0], players[1]);
     }
 
     public void endGame() {
@@ -132,7 +147,7 @@ public class Gameplay {
         return turn;
     }
 
-    public void gameOn(int turn) {
+    public void gameOn(int turn, Board gameBoard) {
         Player thePlayer = null;
         if (turn == 1) {
             thePlayer = players[0];
@@ -140,39 +155,46 @@ public class Gameplay {
             thePlayer = players[1];
         }
 
-        Board game = new Board();
+        //Board game = new Board();
         Scanner scanner = new Scanner(System.in);
-        if (Move.totalNumberOfMoves == 0) {
-            System.out.println(game.toString());
-            View.printBoard(game);
-        }
+        // Hiding the board for now, for testing. it's big and annoying! :)
+        View.printBoard(gameBoard);
         refillTray(thePlayer);
         View.showTray(thePlayer);
-        System.out.println(thePlayer.getName() + ", enter a word (skip: *, quit: #)");
+        System.out.println(thePlayer.getName() + ", ENTER A WORD [skip: *, quit: #, " +
+                "reset tiles: @, view scores: $]");
         String theWord = scanner.next();
 
         if (theWord.equals("*")) {
             System.out.println("You decided to skip your turn.");
-            gameOn(switchTurn());
+            gameOn(switchTurn(), gameBoard);
+        } else if (theWord.equals("@")) {
+            refreshTray(thePlayer);
+            gameOn(switchTurn(), gameBoard);
+        } else if (theWord.equals("$")) {
+            View.printPlayerInformation(players[0], players[1], scores);
+            //gameOn(turn, gameBoard);
         }
+
         else if (theWord.equals("#")) {
             endGame();
         }
         else {
-
-            System.out.println("Now a direction (right: 1 or down: 2):");
+            System.out.println("Now a direction [right: 1 or down: 2]:");
             int theDirection = scanner.nextInt();
             System.out.println("Start column: ");
             int theCol = scanner.nextInt();
             System.out.println("Start row: ");
             int theRow = scanner.nextInt();
-            Move theMove = new Move(theWord, theDirection, theRow, theCol);        // col and rows are reversed.
-            // isMoveValid(thePlayer, theMove, game);   Move validation not working. I am making all words valid for now. See below.
-            theMove.isValid = true;
-            game.placeWordOnBoard(theMove);
-            // NEED TO REMOVE LETTERS FROM TRAY
-            View.printBoard(game);
-            gameOn(switchTurn());
+            Move theMove = new Move(theWord, theDirection, theCol, theRow);
+
+            if (isMoveValid(thePlayer, theMove, gameBoard)) {
+                gameBoard.placeWordOnBoard(theMove);
+                //int score = Scores.computeMoveScore(thePlayer, theMove);
+                //this.scores.updatePlayerScore(thePlayer, score);
+                refreshTray(thePlayer);
+            }
+            gameOn(switchTurn(), gameBoard);
 
             /*
             if (Board.validateWord(theWord)) {
@@ -193,10 +215,19 @@ public class Gameplay {
 
     }
 
+    public void refreshTray(Player player) {
+        String[] lettersTray = player.getLetters();
+
+        for (int i=0; i<lettersTray.length; i++) {
+            this.addTileToBag(lettersTray[i].charAt(0));
+            player.letters[i] = null;
+        }
+    }
+
 
     public void refillTray(Player player) {
         String[] lettersTray = player.getLetters();
-        int lettersMissing = 0;
+        //int lettersMissing = 0;
         for (int i=0 ; i < lettersTray.length ; i++ ) {
             if (lettersTray[i] == "" || lettersTray[i] == null) {
                 lettersTray[i] = String.valueOf(this.getRandomLetterFromBag('i'));
@@ -212,7 +243,7 @@ public class Gameplay {
      * @return      boolean
      */
     public boolean isMoveValid(Player player, Move move, Board board) {
-        String word = move.word;
+        String word = move.word.toUpperCase();
         int row = move.startRow;
         int col = move.startCol;
         int dir = move.direction;
@@ -220,43 +251,67 @@ public class Gameplay {
         Arrays.sort(tileCopy);
         boolean tilesPresent = false;
 
+        System.out.println("Move details:");
+        System.out.println("word:  " + word);
+        System.out.println("row:  " + row);
+        System.out.println("col:  " + col);
+        System.out.println("dir:  " + dir);
+        System.out.println("tileCopy:  " + Arrays.toString(tileCopy));
+
+
+        System.out.println("[cool move validations begin]");
+        //System.out.println(player.getName());
+        //System.out.println("what are the player's letter? "+player.getLetters()
 
         // DOES THE BOARD OVERFLOW
         if ((dir == Move.RIGHT && (col + word.length() > 14)) ||
                 (dir == Move.DOWN && (row + word.length() > 14))) {
-            System.out.println("Board overflow. Invalid move!");
+            System.out.println("isMoveValid err: : Board overflow. Invalid move!");
             return false;
         }
+        System.out.println("Board overflow validation.............................done");
 
         // IS THE WORD VALID USING A DICT
         if (!Board.validateWord(word)) {
-            System.out.println("This word doesn't exist. Can't fool us!");
+            System.out.println("isMoveValid err: This word doesn't exist. Can't fool us!");
             return false;
         }
+        System.out.println("Dictionary validation.................................done");
 
         // INTENDED WORD SHOULD BE THE LARGEST CONTIGUOUS STRING IN THAT DIRECTION
         if (dir == Move.RIGHT) {
             if (board.getTileOnBoard(row, col+word.length()+1) != ' ' ||
                     board.getTileOnBoard(row, col-1) != ' ') {
-                System.out.println("Incomplete input word (find better message)");
+                System.out.println("isMoveValid err: Incomplete input word (find better message)");
                 return false;
             }
         } else if (dir == Move.DOWN) {
             if (board.getTileOnBoard(row+word.length()+1, col) != ' ' ||
                     board.getTileOnBoard(row-1, col) != ' ') {
-                System.out.println("Incomplete input word (downwards)");
+                System.out.println("Incomplete input word");
+                return false;
+            }
+        }
+        System.out.println("Contiguous string validation..........................done");
+
+        // DOES THE FIRST MOVE CROSS THE BOARD CENTER
+//        if (Move.totalNumberOfMoves == 0 && (row > 7 && col > 7)) {
+//            System.out.println("isMoveValid err: First move should touch the board center!");
+//            return false;
+//        }
+
+        if (Move.totalNumberOfMoves == 0) {
+            if ((dir == Move.RIGHT && (col + word.length() < 7)) ||
+                    (dir == Move.DOWN && (row + word.length() < 7)) ||
+                    (row > 7 && col > 7)) {
+                System.out.println("isMoveValid err: First move should touch the board center!");
                 return false;
             }
         }
 
-        // DOES THE FIRST MOVE CROSS THE BOARD CENTER
-        if (Move.totalNumberOfMoves == 1 && (row > 7 && col > 7)) {
-            System.out.println("First move should touch the board center!");
-            return false;
-        }
 
         // DOES THE SECOND (or greater) MOVE TOUCH ONE OF THE EXISTING TILES
-        if (Move.totalNumberOfMoves > 1) {
+        if (Move.totalNumberOfMoves >= 1) {
             for (int i=0; i<word.length(); i++) {
                 if (dir == Move.RIGHT) {
                     if (board.getTileOnBoard(row, col+i) != ' ')    {   tilesPresent = true;    }
@@ -265,69 +320,77 @@ public class Gameplay {
                 }
             }
             if (!tilesPresent)  {
-                System.out.println("New word has to touch an existing word");
+                System.out.println("isMoveValid err: New word has to touch an existing word-HAHA");
                 return false;
             }
         }
 
+        System.out.println("Board placement validation............................done");
 
-        // CAN THAT WORD BE CONSTRUCTED USING EXISTING PIECES AND PLAYER TILES
-        for (int i=0; i<word.length(); i++) {
-            if (dir == Move.RIGHT) {
-                if (board.getTileOnBoard(row, col+i) == word.charAt(i)) {
-                    //don't do anything, this is expected (unless it happens for all letters)
-                } else if (board.getTileOnBoard(row, col+i) == ' ') {
-                    //empty cell - user should have it
-                    int pos = Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i)));
-                    if (pos >= 0) {
-                        tileCopy[pos] = null;
-                    } else {
-                        System.out.println("You are missing the letter '"+ word.charAt(i)+"'.");
-                        return false;
-                    }
-                } else {
-                    //neither empty cell nor expected char -- stepping over someone else's space
-                    System.out.println("What is this character?? We're unable to insert '" + word.charAt(i)+"'.");
-                    return false;
-                }
-            } else if (dir == Move.DOWN) {
-                if (board.getTileOnBoard(row+i, col) == word.charAt(i)) {
-                    //expected for at most all-1 cases
-                } else if (board.getTileOnBoard(row+i, col) == ' ') {
-                    //empty cell - find tile with player
-                    int pos = Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i)));
-                    if (pos >= 0) {
-                        tileCopy[pos] = null;
-                    } else {
-                        System.out.println("You are missing the letter '" + word.charAt(i)+"'.");
-                        return false;
-                    }
-                } else {
-                    //neither empty cell nor expected char -- stepping over someone else's space
-                    System.out.println("What is this character?? We're unable to insert '" + word.charAt(i)+"'.");
-                    return false;
-                }
-            }
 
-        }
-        //no letter was used from the tray
-        if (tileCopy.length == player.getLetters().length) {
-            System.out.println("The word already exists. Try again!");
-            return false;
-        }
+        //  LETS ASSUME THE USER WILL SELECT THE TILES CORRECTLY
+
+
+//        // CAN THAT WORD BE CONSTRUCTED USING EXISTING PIECES AND PLAYER TILES
+//        for (int i=0; i<word.length(); i++) {
+//            if (dir == Move.RIGHT) {
+//                if (board.getTileOnBoard(row, col+i) == word.charAt(i)) {
+//                    //don't do anything, this is expected (unless it happens for all letters)
+//                } else if (board.getTileOnBoard(row, col+i) == ' ') {
+//                    //empty cell - user should have it
+//                    //System.out.println("HELLO--"+Arrays.binarySearch(tileCopy,
+//                    //        String.valueOf(word.charAt(i))));
+//                    int pos = Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i)));
+//                    if (pos >= 0) {
+//                        tileCopy[pos] = null;
+//                    } else {
+//                        System.out.println("isMoveValid err: You are missing the letter '"+ word.charAt(i)+"'.");
+//                        return false;
+//                    }
+//                } else {
+//                    //neither empty cell nor expected char -- stepping over someone else's space
+//                    System.out.println("isMoveValid err: What is this character?? We're unable to insert '" + word.charAt(i)+"'.");
+//                    return false;
+//                }
+//            } else if (dir == Move.DOWN) {
+//                if (board.getTileOnBoard(row+i, col) == word.charAt(i)) {
+//                    //expected for at most all-1 cases
+//                } else if (board.getTileOnBoard(row+i, col) == ' ') {
+//                    //empty cell - find tile with player
+//                    int pos = Arrays.binarySearch(tileCopy, String.valueOf(word.charAt(i)));
+//                    if (pos >= 0) {
+//                        tileCopy[pos] = null;
+//                    } else {
+//                        System.out.println("isMoveValid err: You are missing the letter '" + word.charAt(i)+"'.");
+//                        return false;
+//                    }
+//                } else {
+//                    //neither empty cell nor expected char -- stepping over someone else's space
+//                    System.out.println("isMoveValid err: What is this character?? We're unable to insert '" + word.charAt(i)+"'.");
+//                    return false;
+//                }
+//            }
+//        }
+//        //no letter was used from the tray
+//        if (tileCopy.length == player.getLetters().length) {
+//            System.out.println("isMoveValid err: The word already exists. Try again!");
+//            return false;
+//        }
 
         // ARE SECONDARY WORDS VALID IF THEY EXIST
         ArrayList<String> secList = this.getSecondaryWords(move, board);
         if (!this.validateSecondaryWords(secList)) {
-            System.out.println("The other words you tried to create are invalid. Sorry!");
+            System.out.println("isMoveValid err: The other words you tried to create are invalid. Sorry!");
             return false;
         }
 
         // IF YOU HAVE REACHED HERE, LIFE IS GOOD
-        // 1.   SET THE MOOD TO VALID
+        // 1.   SET THE MOVE TO VALID
         // 2.   SECONDARY WORDS CREATED SHOULD BE PASSED ONTO THE MOVE OBJECT
         move.isValid = true;
+        Move.registerCorrectMove(move);
         move.secondaryWords = secList;
+        System.out.println("[cool move validations complete]");
         return true;
     }
 
