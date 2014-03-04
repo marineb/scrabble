@@ -47,7 +47,7 @@ public class Board {
      */
     private void initDict() throws FileNotFoundException {
         Board.dict = new HashSet<String>();
-        BufferedReader dictReader = new BufferedReader(new FileReader("words.txt"));
+        BufferedReader dictReader = new BufferedReader(new FileReader("../words.txt"));
         try {
             String line = dictReader.readLine();
 
@@ -160,6 +160,7 @@ public class Board {
      * @return      boolean if word is valid
      */
     public static boolean validateWord(String word) {
+        //System.out.println("Dict is validating: " + word);
         return dict.contains(word.toLowerCase());
     }
 
@@ -189,7 +190,7 @@ public class Board {
      * Adds the new word on the board
      * @param move
      */
-    void placeWordOnBoard(Move move) {
+    public void placeWordOnBoard(Move move) {
         //assumption is that the word is valid
         if (move.isValid) {
             String word = move.word;

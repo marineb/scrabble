@@ -17,7 +17,7 @@ class Move {
     public static final int RIGHT = 1;
     public static final int DOWN  = 2;
 
-    static int totalNumberOfMoves = 0;
+    static int totalNumberOfMoves;
 
     String word;
     int direction;
@@ -34,16 +34,17 @@ class Move {
      * @param startRow  starting row coordinate of the move
      * @param startCol  starting col coordinate of the move
      */
-    public Move(String word, int direction, int startRow, int startCol) {
+    public Move(String word, int direction, int startCol, int startRow) {
         //TODO: Add invalid argument checks here
 
         this.word = word;
         this.direction = direction;
-        this.startRow = startRow;
         this.startCol = startCol;
+        this.startRow = startRow;
         this.isValid = false;       //each moves starts off as invalid unless validated
-
-        Move.totalNumberOfMoves++;
+        Move.totalNumberOfMoves = 0;
+        //wrong way to calculate number of moves
+        //Move.totalNumberOfMoves++;
     }
 
     //variables are not declared private
@@ -88,8 +89,9 @@ class Move {
         return -1;
     }
 
-    public boolean registerMove() {
-        return false;
+    public static void registerCorrectMove(Move move) {
+        if (move.isValid)   {   totalNumberOfMoves++;                                       }
+        else                {   System.out.println("invalid move, unable to register");     }
     }
 
 
