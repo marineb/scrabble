@@ -14,7 +14,7 @@ public class Application {
         Board gameBoard = new Board();
         Gameplay gameplay = new Gameplay();
         //Scores scores = new Scores();
-        //sSystem.out.println("total tiles in bag: " + gameplay.totalNumberOfTilesInBag());
+        //s`System.out.println("total tiles in bag: " + gameplay.totalNumberOfTilesInBag());
         //Scores scores = new Scores();
         //View view = new View(); //Not sure if this is necessary,
 
